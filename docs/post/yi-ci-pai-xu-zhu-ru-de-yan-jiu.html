@@ -132,6 +132,9 @@ DECODE(
   	user,<span class="pl-c1">1</span>,<span class="pl-c1">1</span>
   ),chr(<span class="pl-c1">103</span>),<span class="pl-c1">1</span><span class="pl-k">/</span><span class="pl-c1">0</span>,<span class="pl-c1">0</span>
 )</pre></div>
+<p>语句的结果就是：</p>
+<p>取<code class="notranslate">user</code>的第一个字母，若跟chr(103)匹配，则产生一个除零报错，若不匹配，则跟ORDER BY 0产生同样的错误（这就是为什么我让大家把前面ORDER BY 0的错误记下来）</p>
+<p>总结：大佬的思路就是牛！我SQL注入就是SQLMAP一把梭，有就有，没有就没有了哈哈哈。</p>
 </div>
 <button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
 <div class="comments" id="comments"></div>
