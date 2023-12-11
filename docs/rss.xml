@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Mon, 11 Dec 2023 02:18:24 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Mon, 11 Dec 2023 02:18:24 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>Docker 入门笔记</title><link>https:/cha0s32.github.io/post/Docker%20-ru-men-bi-ji.html</link><description>&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Mon, 11 Dec 2023 02:31:14 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Mon, 11 Dec 2023 02:31:14 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>Docker 入门笔记</title><link>https:/cha0s32.github.io/post/Docker%20-ru-men-bi-ji.html</link><description>&#13;
 # 启程&#13;
 &#13;
 ## 容器生态系统&#13;
@@ -66,7 +66,26 @@ base镜像用户空间和发行版一致，内核版本由Docker Host 决定，�
 &#13;
 镜像的每一层都可以被共享&#13;
 &#13;
-**可写的容器层**：当容器启动的时候，会有一个可写层加载到镜像顶部。</description><guid isPermaLink="true">https:/cha0s32.github.io/post/Docker%20-ru-men-bi-ji.html</guid><pubDate>Mon, 11 Dec 2023 02:16:59 +0000</pubDate></item><item><title>Git从入门到实操</title><link>https:/cha0s32.github.io/post/Git-cong-ru-men-dao-shi-cao.html</link><description>## Git 基础&#13;
+**可写的容器层**：当容器启动的时候，会有一个可写层加载到镜像顶部。</description><guid isPermaLink="true">https:/cha0s32.github.io/post/Docker%20-ru-men-bi-ji.html</guid><pubDate>Mon, 11 Dec 2023 02:16:59 +0000</pubDate></item><item><title>Git从入门到实操</title><link>https:/cha0s32.github.io/post/Git-cong-ru-men-dao-shi-cao.html</link><description>&#13;
+   * [Git 基础](#git-基础)&#13;
+      * [创建版本库](#创建版本库)&#13;
+      * [添加及提交到仓库](#添加及提交到仓库)&#13;
+      * [版本回退](#版本回退)&#13;
+      * [撤销修改](#撤销修改)&#13;
+      * [远程仓库](#远程仓库)&#13;
+   * [分支管理](#分支管理)&#13;
+      * [创建与合并分支](#创建与合并分支)&#13;
+      * [解决冲突](#解决冲突)&#13;
+      * [分支管理策略](#分支管理策略)&#13;
+      * [Bug 分支](#bug-分支)&#13;
+   * [好用的github工作流](#好用的github工作流)&#13;
+      * [1. 三个部分](#1-三个部分)&#13;
+      * [2. 流程](#2-流程)&#13;
+      * [3. 同步](#3-同步)&#13;
+      * [4. Pull Request](#4-pull-request)&#13;
+&#13;
+&#13;
+## Git 基础&#13;
 &#13;
 &#13;
 &#13;
