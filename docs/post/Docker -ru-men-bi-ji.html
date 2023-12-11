@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.org/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://cos.kevinc.ltd/file/download?fileId=1419">
+    <script>
+        if(localStorage.getItem("meek_theme")==null){}
+        else if(localStorage.getItem("meek_theme")=="dark"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";}
+        else if(localStorage.getItem("meek_theme")=="light"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";}
+    </script>
+    
+<title>Docker 入门笔记</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<span class="postTitle">Docker 入门笔记</span>
+<div class="title-right">
+
+    <a href="/"><button id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
+        </svg>
+    </button></a>
+
+    <a href="https://github.com/cha0s32/cha0s32.github.io/issues/3" target="_blank"><button class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+        </svg>
+    </button></a>
+
+    <button class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </button>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody">
+<h1>启程</h1>
+<h2>容器生态系统</h2>
+<p>生态系统： 核心技术、平台技术和支持技术</p>
+<p>容器核心技术：让Container在host运行起来的那些技术</p>
+<ul>
+<li>容器规范</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre class="notranslate">组织： Open Container Initiative (OCI)
+
+发布两个规范： runtime spec 和 image format spec
+
+（1） runtime 为容器提供运行环境， docker 和 runtime 的关系类比 Java 和 JVM 的 关系
+
+		lxc runc rkt 是目前主流的三种容器 runtime
+
+（2） 容器管理工具
+
+	对内与 runtime 交互， 对外提供用户接口 （CLI）
+
+（3） 容器定义工具
+
+	docker image 容器的模版
+	dockerfile 用于创建docker image
+	ACI 与image类似，不过是CoreOS开发的
+
+（5） Registry
+
+	镜像的仓库
+  有Docker Hub 和 Quay.io
+
+（6） 容器OS
+
+	专门用于运行容器的操作系统</pre></div>
+<p>容器平台技术：使容器作为集群在分布式环境中运行</p>
+<p>包括容器编排引擎、容器管理平台、基于容器的PaaS</p>
+<h2>docker 镜像</h2>
+<h3>base 镜像</h3>
+<p>含义：</p>
+<ul>
+<li>不依赖其他镜像，从scratch构建</li>
+<li>其他镜像可以以之为基础进行扩展</li>
+</ul>
+<p>Linux 操作系统 由内核空间和用户空间 组成</p>
+<p>对于base 镜像来说，底层直接用 Host 的 kernal，自己只需要提供 rootfs 就行了</p>
+<p>base镜像用户空间和发行版一致，内核版本由Docker Host 决定，所有容器共用host的内核</p>
+<h3>镜像的分层结构</h3>
+<p>新镜像是从base镜像一层层叠加生成，每安装一个软件，就在现有镜像的基础上增加一层</p>
+<p>如果有多个镜像由同一个base镜像构建而来，那docker host 只需要在内存中记载一份base镜像，就可以为所有容器提供服务</p>
+<p>镜像的每一层都可以被共享</p>
+<p><strong>可写的容器层</strong>：当容器启动的时候，会有一个可写层加载到镜像顶部。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">-----<span class="pl-k">&gt;</span> 容器层
+-----<span class="pl-k">&gt;</span> Image 2
+-----<span class="pl-k">&gt;</span> Image 1
+-----<span class="pl-k">&gt;</span> Base Image
+-----<span class="pl-k">&gt;</span> Bootfs</pre></div>
+<p>所有改动，只会在容器层发生，镜像层只读</p>
+<p>在容器层，用户看到的是一个叠加之后的文件系统。相同的文件上层会覆盖下层，用户只能访问到最上层的文件。（读文件的顺序从上到下）</p>
+<p>修改和删除都是复制到容器层进行（在容器层记录修改和删除操作）</p>
+<p>这种特性叫Copy-on-Write</p>
+<h2>构建镜像</h2>
+<ul>
+<li><code class="notranslate">docker commit</code></li>
+<li><code class="notranslate">Dockerfile</code>构建文件</li>
+</ul>
+<h3>docker commit</h3>
+<p>步骤：运行容器 ——&gt; 修改 ———&gt; 保存为新镜像</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">1. 运行容器 
+
+docker run -it ubuntu
+
+2. 修改 （安装程序）
+
+apt-get install vim 
+
+3. 保存为新镜像
+
+ctrl + P + Q
+
+docker ps
+docker commit NAMES Image_name</pre></div>
+<p>不是推荐的方法，且用户不知道镜像如何创建的，存在安全隐患</p>
+<h3>dockerfile</h3>
+<ol>
+<li>创建dockerfile</li>
+<li>进入dockerfile所在的文件夹</li>
+</ol>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker build -t ubuntu-with-vim <span class="pl-c1">.</span></pre></div>
+<p><code class="notranslate">-t</code> 参数后面的是制作的镜像名，后面指定 <code class="notranslate">build context</code> ，docker 会默认在这里寻找dockerfile，同时为镜像构建提供所需要的文件或目录</p>
+<p>创建过程其实也是一层层创建临时容器，然后再用 <code class="notranslate">docker commit</code>打包镜像</p>
+<p>查看镜像分层结构</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker <span class="pl-c1">history</span> image_name</pre></div>
+<p>docker 会进行镜像缓存，如果构建新镜像过程中，某镜像层已经存在，则不需要重新从 base 开始构建，直接用缓存构建。</p>
+<ul>
+<li>docker 镜像层是上层依赖下层的，下面某一层发生变化，上面所有的缓存都会消失</li>
+</ul>
+<h4>dockerfile官方文档</h4>
+<div class="highlight highlight-source-dockerfile"><pre class="notranslate"><span class="pl-k">FROM</span>  指定base镜像
+<span class="pl-k">MAINTAINER</span> 作者
+<span class="pl-k">COPY</span> 从build context复制到镜像
+<span class="pl-k">COPY</span> src dest 
+<span class="pl-k">COPY</span> [<span class="pl-s">"src"</span>,<span class="pl-s">"dest"</span>]
+<span class="pl-k">ADD</span> 跟COPY类似，若src文件为归档文件，会被自动解压到dest
+<span class="pl-k">ENV</span> 设置环境变量
+<span class="pl-k">EXPOSE</span> 指定容器中的进程会监听某个端口
+<span class="pl-k">VOLUME</span> 将文件或目录声明为volume
+<span class="pl-k">WORKDIR</span> 设置镜像中的当前工作目录
+<span class="pl-k">RUN</span> 运行指定的指令
+<span class="pl-k">CMD</span> 启动时运行指定的命令 可以有多个CMD指令，但只有最后一个生效，可以被docker run之后的参数替换
+<span class="pl-k">ENTRYPOINT</span> 跟CMD类似</pre></div>
+<h3>RUN CMD ENTRYPOINT 区别</h3>
+<p>run 经常用来安装软件包，CMD设置容器启动后执行的命令，ENTRYPOINT设置容器启动时运行的命令</p>
+<p>两种传参方式：</p>
+<ul>
+<li>shell方式</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre class="notranslate">RUN apt-get install python3
+CMD <span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">"</span>Hello World<span class="pl-pds">"</span></span>
+
+<span class="pl-c"><span class="pl-c">#</span> 会被shell解析</span></pre></div>
+<ul>
+<li>exec 方式</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre class="notranslate">RUN [<span class="pl-s"><span class="pl-pds">"</span>apt-get<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>install<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>python3<span class="pl-pds">"</span></span>]
+CMD [<span class="pl-s"><span class="pl-pds">"</span>/bin/echo<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>Hello World<span class="pl-pds">"</span></span>]
+
+<span class="pl-c"><span class="pl-c">#</span> 直接运行命令，不会被解析</span></pre></div>
+<p>CMD 若docker run后面有参数，将会被忽略掉</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -it ubuntu /bin/bash</pre></div>
+<p>ENTRYPOINT 跟CMD很像，但是不会被忽略，即使有docker run参数，也一定会被执行</p>
+<p>且CMD可以给ENTRYPOINT提供额外的参数，但CMD提供的参数可以在容器启动时被动态替换</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">ENTRYPOINT [<span class="pl-s"><span class="pl-pds">"</span>/bin/echo<span class="pl-pds">"</span></span>,<span class="pl-s"><span class="pl-pds">"</span>Hello<span class="pl-pds">"</span></span>]
+CMD [<span class="pl-s"><span class="pl-pds">"</span>World<span class="pl-pds">"</span></span>]
+
+<span class="pl-c"><span class="pl-c">#</span> 会输出Hello World</span></pre></div>
+<p>替换为 docker run -it ubuntu Cha0s32、</p>
+<p>会输出为Hello Cha0s32</p>
+<h4>分发镜像</h4>
+<p>发布至官方Registry 的时候，要注意tag的使用</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker tag [镜像名] [tag]</pre></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker login  -u xxx
+docker tag httpd xxx/httpd:v1
+docker push xxx/httpd:v1</pre></div>
+<p>搭建 私有Registry</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -d -p 5000:5000 -v /myregistry:/var/lib/registry registry:2</pre></div>
+<p>后面 -&gt; 容器 映射 前面 -&gt; 本机</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 拉取镜像，上传私有仓库</span>
+docker pull busybox
+docker tag busybox:last ip:port/cha0s32/busybox:v1
+docker push ip:port/cha0s32/busybox:v1</pre></div>
+<h2>Docker 容器</h2>
+<p>删除镜像</p>
+<div class="highlight highlight-source-dockerfile"><pre class="notranslate">docker rmi debian:latest</pre></div>
+<p>停止容器</p>
+<pre lang="docker" class="notranslate"><code class="notranslate">docker stop 短ID
+</code></pre>
+<h4>进入容器的方法</h4>
+<ul>
+<li>docker attach</li>
+</ul>
+<p>通过ctrl + p，ctrl + q 推出attach终端</p>
+<ul>
+<li>docker exec</li>
+</ul>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker <span class="pl-c1">exec</span> -it xxxxx(端ID) bash</pre></div>
+<p>退出容器使用exit就可以了</p>
+<p>区别：exec会在容器中打开新的终端，启动新的进程，如果想在终端中查看启动命令的输出，用attach，除此之外，用exec</p>
+<h4>停止容器</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker stop docker_name <span class="pl-c"><span class="pl-c">#</span> 发送SIGTERM信号</span>
+docker <span class="pl-c1">kill</span> docker_name <span class="pl-c"><span class="pl-c">#</span> 发送SIGKILL信号</span>
+docker start
+
+<span class="pl-c"><span class="pl-c">#</span> 让容器发生错误时自动重启</span>
+docker run -d --restart=always httpd
+
+
+<span class="pl-c"><span class="pl-c">#</span> 只是希望容器暂停一段时间</span>
+docker pause <span class="pl-c"><span class="pl-c">#</span> 不用占用CPU资源</span>
+docker unpause</pre></div>
+<h4>删除容器</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker rm  ID <span class="pl-c"><span class="pl-c">#</span> 可一次性删除多个</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 删除所有已经退出的容器</span>
+docker rm -v <span class="pl-s"><span class="pl-pds">$(</span>docker ps -aq -f status=exited<span class="pl-pds">)</span></span></pre></div>
+<h3>资源限制</h3>
+<h4>内存限制</h4>
+<p>-m 设置内存限额</p>
+<p>--memory-swap 设置内存+swap限额</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -m 200M --memory-swap=300M ubuntu</pre></div>
+<h4>CPU 限额</h4>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run it container_A -c 1024</pre></div>
+<p>-c 后面是比重，比如说两个容器，一个是1024，一个是512，前者使用的CPU资源将是后者的两倍</p>
+<h4>Block IO 限额</h4>
+<p>限制权重</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -it  ubuntu --name A --blkio-weight 600 
+docker tun -it  ubuntu --name B --blkio-weight 300</pre></div>
+<p>限制bps和iops</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">--device-read-bps
+--device-write-bps  <span class="pl-c"><span class="pl-c">#</span> 限制读写数据量</span>
+
+--device-read-iops 
+--device-read-iops <span class="pl-c"><span class="pl-c">#</span> 限制IO次数</span></pre></div>
+<p>oflag=direct 可以指定用direct IO 方式写文件，只有加了这个，--device-read-bps才能生效</p>
+<h2>实现容器的底层技术</h2>
+<p>cgroup 实现资源限额，namespace 实现资源隔离</p>
+<h3>cgroup</h3>
+<p>host 中存在 /sys/fs/cgroup/cpu/docker 目录</p>
+<p>以CPU限额为例，每个容器会创建一个cgroup目录，以容器长ID命名</p>
+<p>内存、IO限额同理</p>
+<h4>namespace</h4>
+<p>Mount 让容器看上去拥有整个文件系统，可以执行mount 和 unmount 命令</p>
+<p>UTS  让容器有自己的hostname，通过docker run -h myhost 这样指定</p>
+<p>IPC 拥有自己的共享内存和信号量</p>
+<p>PID 拥有自己独立的一套PID</p>
+<p>Network 拥有独立的网卡、IP、路由</p>
+<p>User 可以独立管理自己的用户</p>
+<h2>Docker网络</h2>
+<p>目前只讨论单个host的多docker网络</p>
+<p>查看网络<code class="notranslate">docker network ls</code></p>
+<ul>
+<li>None 忘在这个网络下的容器除了lo，没有其他任何网卡 指定 --network=none 应用场景：安全性高且不需要联网</li>
+<li>host 共享host的网络栈 指定 --network=host 应用场景：需求性能好，但是要牺牲灵活性，如端口冲突问题，host已经使用的端口docker容器中不能再使用</li>
+<li>bridge 应用更广</li>
+</ul>
+<h3>Bridge网络</h3>
+<p>docker安装时会创建一个docker0的Linux bridge，如果不指定--network，容器默认都会挂到这里</p>
+<p>容器挂到docker0的拓扑：</p>
+<p>新建一个容器，容器内部有一个网卡eth0</p>
+<p>会新增一个veth接口（网卡），接到docker0</p>
+<p>eth0和veth是一对veth pair，可理解为一根虚拟网线连接起来的一堆网卡，目的就是将eth0接到docker0上</p>
+<p>查看bridge的配置</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker network inspect bridge</pre></div>
+<h3>user-defined 网络</h3>
+<p>提供三种网络驱动：bridge、overlay、macvlan（最后两种用于创建跨主机的网络）</p>
+<p>创建类似bridge的网络</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker network create --driver bridge my_net
+brctl show <span class="pl-c"><span class="pl-c">#</span> 查看网络结构变化</span>
+docker network inspect my_net <span class="pl-c"><span class="pl-c">#</span> 查看my_net的配置</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 指定网段</span>
+docker network create --driver bridge -- subnet 172.22.16.0/24 --gateway 172.22.16.1 my_net2
+<span class="pl-c"><span class="pl-c">#</span> 创建容器时指定网络</span>
+docker run -it --network=my_net2  busybox
+
+可通过 --ip 指定静态IP
+docker run -it --network=my_net2 --ip 172.16.22.2 busybox</pre></div>
+<p>挂载在同一网络上的容器可以直接互相通信</p>
+<p>不同网络上的容器可以通过host作为路由器通信，前提是操作系统上打开了ip forwarding</p>
+<p>但是防火墙可能默认隔离不同的容器network</p>
+<p>解决方法：给一个网络加上一块另一个网络的网卡</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker network connect my_net2 容器短ID</pre></div>
+<h3>容器间通信</h3>
+<h4>IP通信</h4>
+<p>详见上边说的，加入同一个网络或者添加一张一个网络的网卡，这里不加赘述</p>
+<h4>Docker DNS Server</h4>
+<p>上一种方法要知道对应的IP，如果无法确认IP，可以使用该方法，可通过容器名通信</p>
+<p>如：在docker run的时候挂在同一个网络上，可以直接ping docker-name 的方法访问到</p>
+<p>限制：只能在user-defined网络中能使用</p>
+<h4>join容器</h4>
+<p>可以使多个容器共享一个网络栈</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 创建一个web1的httpd容器</span>
+docker run -d -it --name=web1 httpd
+
+<span class="pl-c"><span class="pl-c">#</span> 创建一个busybox容器，指定joined容器为web1</span>
+docker run -it --network-container:web1 busybox</pre></div>
+<p>此时busybox的网卡mac地址和IP完全跟web1一致</p>
+<p>可以直接使用127.0.0.1来访问web1的http服务</p>
+<h4>与外网交互</h4>
+<p>访问外网：</p>
+<p>默认创建的容器通过nat访问外网</p>
+<p>具体过程是：docker0收到容器172.16.0.2 的访问外网的流量，随后丢给NAT处理，NAT将源地址转化为docker host的网卡地址，再把流量转发给目的地址</p>
+<p>外网访问docker：</p>
+<p>通过端口映射实现</p>
+<p>docker将容器对外提供服务的端口映射到host的某个端口</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -d -p host_port:docker_port httpd</pre></div>
+<p>每一个映射的端口，host都会启动一个docker-proxy进程来处理访问</p>
+<h2>Docker存储</h2>
+<h3>storge driver</h3>
+<p>分层结构的基础</p>
+<p>实现了多层数据的堆叠并为用户提供一个单一的合并之后的统一视图</p>
+<p>有多种storge driver，目前解决方案是针对每一个Linux发行版，在安装docker的时候，会指定默认storge driver还有底层文件系统</p>
+<p>应用场景：无状态的容器，数据不需要持久化存储，容器删除的时候数据可以一起删除</p>
+<h3>Volume</h3>
+<p>本质上是Docker Host 文件系统中的目录或文件，能够直接被mount到容器的文件系统中</p>
+<p>数据可以永久保存，即使容器被销毁</p>
+<p>volume的容量取决于文件系统当前未使用的空间，目前没有方法设置volume的容量</p>
+<h4>bind mount</h4>
+<p>将host上已存在的目录或文件mount到容器上</p>
+<p>使用 -v ， -v :</p>
+<p>bind mount 可以让host 与 容器共享数据</p>
+<p>可以指定数据的读写权限，默认可读可写</p>
+<p>指定只读 ，容器无法对数据进行修改</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">-v <span class="pl-k">~</span>/htdocs:/usr/local/apache2/htdocs:ro</pre></div>
+<p>缺点：当容器迁移到其他host，该host没有要mount的数据或数据不在相同的路径，操作会失败</p>
+<h4>docker managed volume</h4>
+<p>不需要指定mount源，知名mount point 就行</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -d -p 80:80 -v /usr/local/apache2/htdocs httpd</pre></div>
+<p>Data volume 的位置在配置文件中可以看到</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker inspect 容器ID</pre></div>
+<p>关注Mounts列表，Source就是该volume在host上的目录</p>
+<p>步骤：</p>
+<p>docker在 /var/lib/docker/volumes 中生成一个随机目录作为mount源</p>
+<p>如果mount到的目录已经存在，则把数据复制到mount源</p>
+<p>将volume mount到相关目录</p>
+<h4>docker和host数据共享</h4>
+<p>docker managed volume由于是容器启动时才生成，所以需要将共享数据复制到volume中</p>
+<p>一种就是直接linux cp命令将数据复制到mount源文件夹</p>
+<p>一种是通过docker cp在容器和host间进行数据复制</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker cp <span class="pl-k">~</span>/htdocs/index.html 容器ID:/usr/local/apache/htdocs/</pre></div>
+<h4>容器间数据共享</h4>
+<p>一种方法，一个目录mount到不同容器的文件系统</p>
+<p>另一种方法是使用 volume container</p>
+<p>volume就是专门给其他容器提供volume的容器</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 建立 volume container</span>
+
+docker create --name vc_data \
+-v <span class="pl-k">~</span>/htdocs:/usr/local/apache2/htdocs \
+-v /other/useful/tools \
+busybox</pre></div>
+<p>建立就好，本来不需要运行，只是提供数据</p>
+<p>bind mount：存放Web Server的静态文件</p>
+<p>docker managed vulume：存放一些实用工具</p>
+<p>其他容器可以通过 --volumes-from 实用vc_data 这个volume container</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run --name web1 -d -p 80 --volume-from vc_data httpd</pre></div>
+<h4>Data-packed volume container</h4>
+<p>上述例子中，volume container 的数据是在host中，现在目的是将数据完全放到volume container中</p>
+<p>原理：将数据打包到镜像中</p>
+<div class="highlight highlight-source-dockerfile"><pre class="notranslate"><span class="pl-k">FROM</span> busybox:latest
+<span class="pl-k">ADD</span> htdocs /usr/local/apache2/htdocs
+<span class="pl-k">VOLUME</span> /usr/local/apache2/htdocs</pre></div>
+<p>打包镜像，使用该镜像创建容器</p>
+<p>启动httpd容器，并使用--volume-from指定volume container</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -d -p 80:80 --volume-from vc_data httpd</pre></div>
+<p>该方法非常适合迁移</p>
+<h4>数据迁移</h4>
+<p>以docker私有仓库为例</p>
+<p>创建命令</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -d -p 5000:5000 -v /myregistry:/var/lib/registry registry:2</pre></div>
+<p>迁移步骤（启用新版本）</p>
+<ol>
+<li>docker stop 掉当前容器</li>
+<li>启用新版本容器并mount原有的volume</li>
+</ol>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker run -d -p 5000:5000 -v /myregistry:/var/lib/registry registry:latest</pre></div>
+<h4>销毁</h4>
+<p>对于docker managed volume的，在docker rm容器的时候，带上-v 参数，会把volume一并删除</p>
+<p>前提是没有其他容器mount该volume</p>
+<p>没有容器mount到volume，但volume还存在，可以使用</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">docker volume ls <span class="pl-c"><span class="pl-c">#</span> 查询</span>
+docker volume rm {volume_ID} <span class="pl-c"><span class="pl-c">#</span>删除</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 批量删除</span>
+docker volume rm <span class="pl-s"><span class="pl-pds">$(</span>docker volume ls -q<span class="pl-pds">)</span></span></pre></div>
+</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https:/cha0s32.github.io"> 呆毛的博客 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://github.com/Meekdai/Gmeek" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'post': 'M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Zm.75 2.25h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Z', 'link': 'm7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z', 'about': 'M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z', 'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'search': 'M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z', 'rss': 'M2.002 2.725a.75.75 0 0 1 .797-.699C8.79 2.42 13.58 7.21 13.974 13.201a.75.75 0 0 1-1.497.098 10.502 10.502 0 0 0-9.776-9.776.747.747 0 0 1-.7-.798ZM2.84 7.05h-.002a7.002 7.002 0 0 1 6.113 6.111.75.75 0 0 1-1.49.178 5.503 5.503 0 0 0-4.8-4.8.75.75 0 0 1 .179-1.489ZM2 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z', 'upload': 'M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z'};
+var utterancesLoad=0;
+if(localStorage.getItem("meek_theme")==null){localStorage.setItem("meek_theme","light");changeLight();}
+else if(localStorage.getItem("meek_theme")=="dark"){changeDark();}
+else if(localStorage.getItem("meek_theme")=="light"){changeLight();}
+
+function changeDark(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["moon"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#00f0ff";
+    if(utterancesLoad==1){utterancesTheme("dark-blue");}
+}
+function changeLight(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["sun"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#ff5000";
+    if(utterancesLoad==1){utterancesTheme("github-light");}
+}
+function modeSwitch(){
+    if(document.getElementsByTagName("html")[0].attributes[0].value=="light"){changeDark();localStorage.setItem("meek_theme","dark");}
+    else{changeLight();localStorage.setItem("meek_theme","light");}
+}
+function utterancesTheme(theme){
+    const message = {type: 'set-theme',theme: theme};
+    const iframe = document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+}
+
+console.log("\n %c Gmeek last %c https://github.com/Meekdai/Gmeek \n\n", "color: #fff; background-image: linear-gradient(90deg, rgb(47, 172, 178) 0%, rgb(45, 190, 96) 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, rgb(45, 190, 96) 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
+</script>
+
+<script>
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","cha0s32/cha0s32.github.io");
+    script.setAttribute("issue-term","title");
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else{script.setAttribute("theme","github-light");}
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+</script>
+
+
+
+
+</html>
