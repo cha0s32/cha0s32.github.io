@@ -1,5 +1,11 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Mon, 11 Dec 2023 02:33:05 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Mon, 11 Dec 2023 02:33:05 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>Docker 入门笔记</title><link>https:/cha0s32.github.io/post/Docker%20-ru-men-bi-ji.html</link><description>* [启程](#启程)&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Wed, 13 Dec 2023 01:46:53 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Wed, 13 Dec 2023 01:46:53 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>靶场练习2：cloudantvirus</title><link>https:/cha0s32.github.io/post/ba-chang-lian-xi-2%EF%BC%9Acloudantvirus.html</link><description>## 靶场链接&#13;
+&#13;
+https://www.vulnhub.com/entry/boredhackerblog-cloud-av,453/&#13;
+&#13;
+## 信息收集&#13;
+&#13;
+练习1用了`arp-scan`，这种工具有可能会被防火墙流量监测到，所以可以使用`arping`, 这种工具基本`Linux`发行版都会自带。</description><guid isPermaLink="true">https:/cha0s32.github.io/post/ba-chang-lian-xi-2%EF%BC%9Acloudantvirus.html</guid><pubDate>Wed, 13 Dec 2023 01:46:24 +0000</pubDate></item><item><title>Docker 入门笔记</title><link>https:/cha0s32.github.io/post/Docker%20-ru-men-bi-ji.html</link><description>* [启程](#启程)&#13;
    * [容器生态系统](#容器生态系统)&#13;
    * [docker 镜像](#docker-镜像)&#13;
       * [base 镜像](#base-镜像)&#13;

