@@ -1,5 +1,23 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Wed, 13 Dec 2023 01:46:53 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Wed, 13 Dec 2023 01:46:53 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>靶场练习2：cloudantvirus</title><link>https:/cha0s32.github.io/post/ba-chang-lian-xi-2%EF%BC%9Acloudantvirus.html</link><description>## 靶场链接&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Wed, 13 Dec 2023 02:34:16 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Wed, 13 Dec 2023 02:34:16 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>靶场练习3: Funbox2</title><link>https:/cha0s32.github.io/post/ba-chang-lian-xi-3%3A%20Funbox2.html</link><description>## 信息收集阶段&#13;
+&#13;
+扫描端口&#13;
+&#13;
+```shell&#13;
+sudo nmap -p- -n -v -sS --max-retries=0 172.16.33.30&#13;
+```&#13;
+&#13;
+&lt;img src="https://cos.kevinc.ltd/file/download?fileId=706" style="zoom:33%;" /&gt;&#13;
+&#13;
+发现开放端口21，22，80，扫描版本&#13;
+&#13;
+```shell&#13;
+sudo nmap -p21,22,80 -sV -A 172.16.33.30&#13;
+```&#13;
+&#13;
+&lt;img src="https://cos.kevinc.ltd/file/download?fileId=708" style="zoom:33%;" /&gt;&#13;
+&#13;
+扫描一下敏感目录，没发现有什么有价值的信息，除了一个robots.txt, 访问得到路径 /logs/ , nmap 已经扫出来了。</description><guid isPermaLink="true">https:/cha0s32.github.io/post/ba-chang-lian-xi-3%3A%20Funbox2.html</guid><pubDate>Wed, 13 Dec 2023 02:33:50 +0000</pubDate></item><item><title>靶场练习2：cloudantvirus</title><link>https:/cha0s32.github.io/post/ba-chang-lian-xi-2%EF%BC%9Acloudantvirus.html</link><description>## 靶场链接&#13;
 &#13;
 https://www.vulnhub.com/entry/boredhackerblog-cloud-av,453/&#13;
 &#13;
