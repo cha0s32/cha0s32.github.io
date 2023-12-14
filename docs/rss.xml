@@ -1,5 +1,27 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Thu, 14 Dec 2023 01:51:36 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Thu, 14 Dec 2023 01:51:36 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>靶机练习4: SolidState</title><link>https:/cha0s32.github.io/post/ba-ji-lian-xi-4%3A%20SolidState.html</link><description>&#13;
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>呆毛的博客</title><link>https:/cha0s32.github.io</link><description>童话是一种生活态度，仅此而已。</description><copyright>呆毛的博客</copyright><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><image><url>https://cos.kevinc.ltd/file/download?fileId=1420</url><title>avatar</title><link>https:/cha0s32.github.io</link></image><lastBuildDate>Thu, 14 Dec 2023 02:33:47 +0000</lastBuildDate><managingEditor>呆毛的博客</managingEditor><pubDate>Thu, 14 Dec 2023 02:33:47 +0000</pubDate><ttl>60</ttl><webMaster>呆毛的博客</webMaster><item><title>靶机练习6: BSS(Cute 1.0.2)</title><link>https:/cha0s32.github.io/post/ba-ji-lian-xi-6%3A%20BSS%28Cute%201.0.2%29.html</link><description>&#13;
+&#13;
+## 靶机地址&#13;
+&#13;
+https://www.vulnhub.com/entry/bbs-cute-102,567/&#13;
+&#13;
+## 信息收集&#13;
+&#13;
+进行全端口扫描，确认目标开放端口和服务&#13;
+&#13;
+```shell&#13;
+nmap -n -v -sS --max-retries=0 -p- 172.16.33.9&#13;
+```&#13;
+&#13;
+&lt;img src="https://cos.kevinc.ltd/file/download?fileId=835" style="zoom:50%;" /&gt;&#13;
+&#13;
+对开放端口进行版本的扫描&#13;
+&#13;
+```shell&#13;
+nmap -sV -p22,80,88,110,995 -A 172.16.33.9&#13;
+```&#13;
+&#13;
+通过对各自服务的信息收集，并无入手点。</description><guid isPermaLink="true">https:/cha0s32.github.io/post/ba-ji-lian-xi-6%3A%20BSS%28Cute%201.0.2%29.html</guid><pubDate>Thu, 14 Dec 2023 02:33:26 +0000</pubDate></item><item><title>靶机练习4: SolidState</title><link>https:/cha0s32.github.io/post/ba-ji-lian-xi-4%3A%20SolidState.html</link><description>&#13;
 ## 信息收集阶段&#13;
 &#13;
 全端口扫描，查询目标靶机开放端口和服务&#13;
