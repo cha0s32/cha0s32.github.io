@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.org/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://cos.kevinc.ltd/file/download?fileId=1419">
+    <script>
+        if(localStorage.getItem("meek_theme")==null){}
+        else if(localStorage.getItem("meek_theme")=="dark"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";}
+        else if(localStorage.getItem("meek_theme")=="light"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";}
+    </script>
+    
+<title>靶机练习7：LOLY</title>
+
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<span class="postTitle">靶机练习7：LOLY</span>
+<div class="title-right">
+
+    <a href="/"><button id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
+        </svg>
+    </button></a>
+
+    <a href="https://github.com/cha0s32/cha0s32.github.io/issues/10" target="_blank"><button class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+        </svg>
+    </button></a>
+
+    <button class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </button>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody">
+<h2>靶机地址</h2>
+<p><a href="https://www.vulnhub.com/entry/loly-1,538/" rel="nofollow">https://www.vulnhub.com/entry/loly-1,538/</a></p>
+<h2>信息收集</h2>
+<p>扫描全端口，进行服务发现</p>
+<pre class="notranslate"><code class="notranslate">nmap -n -v -sS -max-retries=0 -p- 172.16.33.25
+</code></pre>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/9ec07f0e399ff61fc5eb7768013ce2fde711f10cb19922f9605e1a54380c3762/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303139"><img src="https://camo.githubusercontent.com/9ec07f0e399ff61fc5eb7768013ce2fde711f10cb19922f9605e1a54380c3762/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303139" alt="https://cos.kevinc.ltd/file/download?fileId=1019" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1019" style="max-width: 100%;"></a></p>
+<p>发现只有80端口的web服务</p>
+<p>进行进一步的版本发现和目录扫描（使用了nmap 的vuln脚本）</p>
+<pre class="notranslate"><code class="notranslate">sudo nmap -p80 -script=vuln 172.16.33.25
+</code></pre>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/5affe9ef962576926cf75af7bb2f7389f81b9b79fb933fadb607ab5bf0d49cc8/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303230"><img src="https://camo.githubusercontent.com/5affe9ef962576926cf75af7bb2f7389f81b9b79fb933fadb607ab5bf0d49cc8/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303230" alt="https://cos.kevinc.ltd/file/download?fileId=1020" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1020" style="max-width: 100%;"></a></p>
+<p>发现有目录<code class="notranslate">/wordpress</code>和<code class="notranslate">wordpress/wp-login.php</code>，其中含有wordpress的登录页面</p>
+<pre class="notranslate"><code class="notranslate">dirsearch -u 172.16.33.25 -w  /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -t 50
+</code></pre>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/e038ced7665864c27bbaef596efe76457fe901dfe04f048816618c1900415a77/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303231"><img src="https://camo.githubusercontent.com/e038ced7665864c27bbaef596efe76457fe901dfe04f048816618c1900415a77/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303231" alt="https://cos.kevinc.ltd/file/download?fileId=1021" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1021" style="max-width: 100%;"></a></p>
+<h2>利用漏洞获取shell</h2>
+<p>访问<code class="notranslate">/wordpress/wp-login.php</code>，随机输入账号密码，提示无法访问服务<code class="notranslate">loly.lc</code></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/5109f2bb67b8b9460995d7d013160f9d5040c49826978c1c8ad5639a6a265112/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303232"><img src="https://camo.githubusercontent.com/5109f2bb67b8b9460995d7d013160f9d5040c49826978c1c8ad5639a6a265112/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303232" alt="https://cos.kevinc.ltd/file/download?fileId=1022" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1022" style="max-width: 100%;"></a></p>
+<p>需要在<code class="notranslate">/etc/hosts</code>进行域名解析</p>
+<pre class="notranslate"><code class="notranslate">#oscp
+172.16.33.25 loly.lc
+</code></pre>
+<p>重新访问，提示未知用户名</p>
+<p>由于服务是<code class="notranslate">wordpress</code>，可以使用工具<code class="notranslate">wpscan</code>进行用户名枚举</p>
+<pre class="notranslate"><code class="notranslate">wpscan --url http://172.16.33.25/wordpress -e
+</code></pre>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/398ec1a416e2f1ce19f5192ad2b1f58b65a7d818e34e39dbecb777119f77196f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303233"><img src="https://camo.githubusercontent.com/398ec1a416e2f1ce19f5192ad2b1f58b65a7d818e34e39dbecb777119f77196f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303233" alt="https://cos.kevinc.ltd/file/download?fileId=1023" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1023" style="max-width: 100%;"></a></p>
+<p>获取用户名为<code class="notranslate">loly</code>，继续破解密码</p>
+<pre class="notranslate"><code class="notranslate">wpscan --url http://172.16.33.25/wordpress -U loly -P /usr/share/wordlists/rockyou.txt
+</code></pre>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/4a9d116187a88c873aec2825c15154f21882b69aef2b64e790276873187e07e1/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303235"><img src="https://camo.githubusercontent.com/4a9d116187a88c873aec2825c15154f21882b69aef2b64e790276873187e07e1/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303235" alt="https://cos.kevinc.ltd/file/download?fileId=1025" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1025" style="max-width: 100%;"></a></p>
+<p>使用获得的用户名和密码登录<code class="notranslate">wordpress</code>后台</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b5a6ed0e8673263be24e4f3bc0c3bb1179d0f49b91556628b80f16b2dce7681d/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303236"><img src="https://camo.githubusercontent.com/b5a6ed0e8673263be24e4f3bc0c3bb1179d0f49b91556628b80f16b2dce7681d/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303236" alt="https://cos.kevinc.ltd/file/download?fileId=1026" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1026" style="max-width: 100%;"></a></p>
+<p>登录后台后找不到<code class="notranslate">Appearance</code>下的<code class="notranslate">Editor</code>，无法将木马写到404页面中</p>
+<p>发现<code class="notranslate">AdRotate</code>的<code class="notranslate">Manage Media</code>中有上传点，可以尝试上传木马</p>
+<p>使用<code class="notranslate">/usr/share/webshells/php</code>下的<code class="notranslate">php-reverse-shell.php</code>，将地址和端口改一下，改名后压缩为<code class="notranslate">shell.zip</code></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/255a50044ee0d293b0be6266215a306273a2be5789ec0d6a13778e77492d50d0/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303237"><img src="https://camo.githubusercontent.com/255a50044ee0d293b0be6266215a306273a2be5789ec0d6a13778e77492d50d0/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303237" alt="https://cos.kevinc.ltd/file/download?fileId=1027" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1027" style="max-width: 100%;"></a></p>
+<p>在<code class="notranslate">Settings</code>处可以看到上传路径</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/bbee0a61ffc606bc4fff991832f65f68c05378b048c37e3f056c54431a18f754/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303238"><img src="https://camo.githubusercontent.com/bbee0a61ffc606bc4fff991832f65f68c05378b048c37e3f056c54431a18f754/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303238" alt="https://cos.kevinc.ltd/file/download?fileId=1028" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1028" style="max-width: 100%;"></a></p>
+<p>在kali端监听设置端口，并在网页中访问<code class="notranslate">wordpress/wp-content/banners/shell.php</code>,获得shell</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b569a3501cf2c9219d16b0e59e8cfb2a5b891cacfbdf86584fe66d2fb01ca41d/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303239"><img src="https://camo.githubusercontent.com/b569a3501cf2c9219d16b0e59e8cfb2a5b891cacfbdf86584fe66d2fb01ca41d/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303239" alt="https://cos.kevinc.ltd/file/download?fileId=1029" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1029" style="max-width: 100%;"></a></p>
+<h2>提权</h2>
+<p>尝试上传 linpeas.sh 到靶机，发现不行，最后发现 <code class="notranslate">/tmp</code>目录中才能上传成功</p>
+<p>通过<code class="notranslate">linpeas.sh</code>的提示，发现有现成的<code class="notranslate">exploit</code>可利用</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/a9117afd445f9680bcb684000f79eb25ca44c62653dfd84c5a077234848b76f3/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303330"><img src="https://camo.githubusercontent.com/a9117afd445f9680bcb684000f79eb25ca44c62653dfd84c5a077234848b76f3/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303330" alt="https://cos.kevinc.ltd/file/download?fileId=1030" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1030" style="max-width: 100%;"></a></p>
+<blockquote>
+<p>刚开始用了40871.c这个exploit, 发现在kali上编译成功后靶机上执行不了，直接传到靶机上也编译不成功</p>
+</blockquote>
+<p>使用<code class="notranslate">searchsploit</code>找到<code class="notranslate">exploit</code>，在kali中进行编译</p>
+<pre class="notranslate"><code class="notranslate">searchsploit -m 45010
+gcc 45010.c -o exploit
+</code></pre>
+<p>传到靶机上，赋予执行权限后执行</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/129d77efbd7ba449a7e23992b6be9f347c1ca9e69775a1923cb9b7ac0e4954c7/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303331"><img src="https://camo.githubusercontent.com/129d77efbd7ba449a7e23992b6be9f347c1ca9e69775a1923cb9b7ac0e4954c7/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d31303331" alt="https://cos.kevinc.ltd/file/download?fileId=1031" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=1031" style="max-width: 100%;"></a></p>
+<p>成功获得root 权限，可查看 root.txt</p>
+<h2>参考资料</h2>
+<p><a href="https://blog.csdn.net/weixin_51957047/article/details/124985217" rel="nofollow">Wordpress网站渗透测试</a></p>
+</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https:/cha0s32.github.io"> 呆毛的博客 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://github.com/Meekdai/Gmeek" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'post': 'M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Zm.75 2.25h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Z', 'link': 'm7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z', 'about': 'M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z', 'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'search': 'M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z', 'rss': 'M2.002 2.725a.75.75 0 0 1 .797-.699C8.79 2.42 13.58 7.21 13.974 13.201a.75.75 0 0 1-1.497.098 10.502 10.502 0 0 0-9.776-9.776.747.747 0 0 1-.7-.798ZM2.84 7.05h-.002a7.002 7.002 0 0 1 6.113 6.111.75.75 0 0 1-1.49.178 5.503 5.503 0 0 0-4.8-4.8.75.75 0 0 1 .179-1.489ZM2 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z', 'upload': 'M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z'};
+var utterancesLoad=0;
+if(localStorage.getItem("meek_theme")==null){localStorage.setItem("meek_theme","light");changeLight();}
+else if(localStorage.getItem("meek_theme")=="dark"){changeDark();}
+else if(localStorage.getItem("meek_theme")=="light"){changeLight();}
+
+function changeDark(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["moon"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#00f0ff";
+    if(utterancesLoad==1){utterancesTheme("dark-blue");}
+}
+function changeLight(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["sun"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#ff5000";
+    if(utterancesLoad==1){utterancesTheme("github-light");}
+}
+function modeSwitch(){
+    if(document.getElementsByTagName("html")[0].attributes[0].value=="light"){changeDark();localStorage.setItem("meek_theme","dark");}
+    else{changeLight();localStorage.setItem("meek_theme","light");}
+}
+function utterancesTheme(theme){
+    const message = {type: 'set-theme',theme: theme};
+    const iframe = document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+}
+
+console.log("\n %c Gmeek last %c https://github.com/Meekdai/Gmeek \n\n", "color: #fff; background-image: linear-gradient(90deg, rgb(47, 172, 178) 0%, rgb(45, 190, 96) 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, rgb(45, 190, 96) 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
+</script>
+
+<script>
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","cha0s32/cha0s32.github.io");
+    script.setAttribute("issue-term","title");
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else{script.setAttribute("theme","github-light");}
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+</script>
+
+
+
+
+</html>
